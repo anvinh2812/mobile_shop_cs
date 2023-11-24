@@ -7,8 +7,8 @@
     z-index: 11;
     display: flex;
     height: 64px;
+    width: 100%;
     justify-content: center;
-    
 }
 .header__background{
     width: 100%;
@@ -323,7 +323,6 @@
 /* Slidebar */
 
 .slide{
-    display: grid;
     margin-top: 15px;
     margin-bottom: 15px;
 }

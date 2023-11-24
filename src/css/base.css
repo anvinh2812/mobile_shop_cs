@@ -16,10 +16,10 @@ html{
     display: block;
     padding: 0;
 }
-.wide{
+/* .wide{
     width: 1200px;
     margin: 0 auto;
-}
+} */
 .row{
     display: flex;
     flex-wrap: wrap;
