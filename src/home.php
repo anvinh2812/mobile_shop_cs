@@ -9,13 +9,13 @@
     <link rel="shortcut icon" href="./assets/img/zalo suopprt/cellphones.png">
     <link rel="stylesheet" href="./assets/font/themify-icons-font/themify-icons/themify-icons.css">
     <link rel="stylesheet" href="./assets/font/fontawesome-free-5.15.4/fontawesome-free-5.15.4-web/css/all.css">
-    <link rel="stylesheet" href="./css/base.css">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./action/javascript.js">
     <title>Nhom 13</title>
 </head>
 <body>
     <div id="main">
+        <!-- Header -->
         <div class="header__height"></div>
         <div class="header grid wide">
                     <div class="row">
@@ -135,7 +135,6 @@
                         </div>
                     </div>
         </div>
-        <!-- End header -->
         <!-- Slide -->  
         <div class="slide grid wide">
             <div class="row">
@@ -328,6 +327,7 @@
                 }
             </script>
         </div>
+        <!-- ADS -->
         <div class="web__ads gird wide">
             <div class="row">
                 <div class="web__ads__box">
@@ -340,6 +340,7 @@
                 </div>
             </div>
         </div>
+        <!-- flash__sale -->
         <div class="flash__sale grid wide">
             <div class="row">
                 <div class="c-6">
@@ -469,24 +470,24 @@
                 echo '</div>';
                 ?>
                 <style>
-                .pagination {
-                display: flex;
-                justify-content: center;
-            }
-            .pagination a {
-                color: white;
-                font-weight: bold;
-                text-decoration: none; /* Loại bỏ gạch chân */
-                padding: 5px 10px; /* Khoảng cách giữa các trang */
-                margin: 0 3px; /* Khoảng cách giữa các trang */
-            }
-            .pagination a:hover {
-                background-color: gray; /* Màu nền khi di chuột qua */
-            }
+                    .pagination {
+                    display: flex;
+                    justify-content: center;
+                }
+                .pagination a {
+                    color: white;
+                    font-weight: bold;
+                    text-decoration: none; /* Loại bỏ gạch chân */
+                    padding: 5px 10px; /* Khoảng cách giữa các trang */
+                    margin: 0 3px; /* Khoảng cách giữa các trang */
+                }
+                .pagination a:hover {
+                    background-color: gray; /* Màu nền khi di chuột qua */
+                }
                 </style>
         </div>
+        <!-- hot__phone -->
         <div class="featured__phone grid wide">
-            <!-- Title -->
             <div class="row featured__phone__gutter">
                 <div class="c-3">
                     <div class="featured__phone__title">
@@ -494,52 +495,56 @@
                     </div>
                 </div>
                 <div class="c-7">
-                    <?php
-                    include 'connect.php'; // Đảm bảo đường dẫn đúng tới file connec.php
+                    <div class="featured__phone__related__tag">
+                        <?php
+                        include 'connect.php';
 
-                    $sql = "SELECT * FROM categories";
-                    $result = $conn->query($sql);
+                        $sql = "SELECT * FROM categories";
+                        $result = $conn->query($sql);
 
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo '<div class="featured__phone__related__tag">';
-                            echo '<a href="" class="futured__phone__item">' . $row["cname"] . '</a>';
-                            echo '</div>';
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<div class="featured__phone__related__tag">';
+                                echo '<a href="?category=' . $row["cid"] . '" class="futured__phone__item">' . $row["cname"] . '</a>';
+                                echo '</div>';
+                            }
+                        } else {
+                            echo "Không có dữ liệu";
                         }
-                        echo '</div>';
-                    } else {
-                        echo "Không có dữ liệu";
-                    }
-                    $conn->close(); // Đóng kết nối
-                    ?>  
+                        $conn->close();
+                        ?>
+                    </div>
                 </div>
-            <!-- Product List -->
-            <?php
+                <!-- Product List -->
+                <?php
                 include 'connect.php';
+                $productsPerPage = 5; // Số lượng sản phẩm trên mỗi trang
+                $category_id = isset($_GET['category']) ? $_GET['category'] : null;
+                $page = isset($_GET['page']) && $_GET['page'] > 0 ? $_GET['page'] : 1;
+                // Tính tổng số sản phẩm theo từng danh mục
+                $countSql = "SELECT COUNT(*) AS total FROM product";
+                if ($category_id !== null) {
+                    $countSql .= " WHERE cid = $category_id";
+                }
+                $countResult = $conn->query($countSql);
+                $countRow = $countResult->fetch_assoc();
+                $totalProducts = $countRow['total'];
+                $totalPages = ceil($totalProducts / $productsPerPage); // Tính tổng số trang
+                // Xây dựng câu truy vấn lấy dữ liệu sản phẩm theo từng trang và danh mục
+                $start = ($page - 1) * $productsPerPage;
+                $sql = "SELECT * FROM product";
+                if ($category_id !== null) {
+                    $sql .= " WHERE cid = $category_id";
+                }
+                $sql .= " ORDER BY phot ASC LIMIT $start, $productsPerPage";
 
-                $productsPerRow = 5; // Số lượng sản phẩm trên mỗi hàng
-                $maxRows = 2; // Số hàng tối đa
-                $limit = $productsPerRow * $maxRows; // Số lượng sản phẩm tối đa trên mỗi trang
-
-                $page = isset($_GET['page']) ? $_GET['page'] : 1;
-                $start = ($page - 1) * $limit;
-
-                $sql = "SELECT * FROM product LIMIT $start, $limit";
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
-                    $rowCount = ceil($result->num_rows / $productsPerRow);
-                    $currentRow = 0;
                     echo '<div class="featured__phone__product__list">';
-
                     while ($row = $result->fetch_assoc()) {
-                        if ($currentRow >= $maxRows) {
-                            break; // Đạt tới số hàng tối đa, dừng vòng lặp
-                        }
-                        if ($currentRow % $maxRows == 0) {
-                            echo '<div class="row">';
-                        }
                         echo '<div class="featured__phone__product__item">';
+                        // Hiển thị thông tin sản phẩm
                         echo '<div class="flash__sale__discount">';
                         echo '<p>' . $row['pprice'] . '</p>';
                         echo '</div>';
@@ -560,38 +565,47 @@
                         echo '</p>';
                         echo '</div>';
                         echo '</div>';
-                        echo '<div class="featured__phone__product__desc__rare featured__phone__rare">';
-                        echo '<div class="featured__phone__product__desc__rare__star">';
-                        // Hiển thị sao đánh giá
+                        // Các phần khác của sản phẩm
                         // ...
-                        echo '</div>';
-                        echo '<div class="featured__phone__product__desc__rare__vote">';
-                        // Hiển thị số đánh giá
-                        // ...
-                        echo '</div>';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '</div>';
-                        if (($currentRow + 1) % $productsPerRow == 0 || $currentRow == $result->num_rows - 1) {
-                            echo '</div>'; // Kết thúc hàng
-                        }
-                        $currentRow++;
+                        echo '</div>'; // Kết thúc featured__phone__product__desc
+                        echo '</div>'; // Kết thúc featured__phone__product__item
                     }
                     echo '</div>'; // Kết thúc featured__phone__product__list
-                    $totalPages = ceil($result->num_rows / $limit);
-                    echo '<div class="so_trang">';
-                    for ($i = 1; $i <= $totalPages; $i++) {
-                        echo '<a href="?page=' . $i . '">' . $i . '</a>';
-                    }
-                    echo '</div>';
                 } else {
                     echo "Không có sản phẩm.";
                 }
+
                 $conn->close();
                 ?>
             </div>
+            <?php
+                echo '<div class="pagination">';
+                for ($i = 1; $i <= $totalPages; $i++) {
+                    echo '<a href="home.php?page=' . $i . '&category=' . $category_id . '">' . $i . '</a> '; // Hiển thị các liên kết đến các trang
+                }
+                echo '</div>';
+                ?>
+                <style>
+                .pagination {
+                    display: flex;
+                    justify-content: center;
+                    background-color: bisque;
+                }
+                .pagination a {
+                    color: white;
+                    font-weight: bold;
+                    text-decoration: none; /* Loại bỏ gạch chân */
+                    padding: 5px 10px; /* Khoảng cách giữa các trang */
+                    margin: 0 3px; /* Khoảng cách giữa các trang */
+                }
+                .pagination a:hover {
+                    background-color: gray; /* Màu nền khi di chuột qua */
+                }
+                </style>
         </div>
-        <div class="footer__information__background">
+        
+    </div>
+    <div class="footer__information__background">
             <div class="footer__information grid wide">
             <div class="row footer__information__row">
                 <!-- 1st -->
@@ -674,6 +688,5 @@
                 </div>
             </div>
         </div>
-    </div>
 </body>
 </html>
