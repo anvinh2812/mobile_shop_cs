@@ -684,6 +684,7 @@
 .flash__sale__row{
     justify-content: space-between;
 }
+/* Trong file CSS */
 /* Countdown */
 .coutdown{
     display: flex;

@@ -1,6 +1,5 @@
 <?php
     session_start();
-	require_once("connect.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,50 +30,9 @@
                         <!-- Logo Image -->
                         <div class="header__logo__img">
                             <a href=""><img src="./assets/img/Desktop logo/1.png" alt=""></a>
-                        </div>      
-                                <!-- Submenu Location Store -->
-                                <div class="header__location__submenu">
-                                    <ul class="header__location__submenu__list">
-                                        <li class="header__location__submenu__item">
-                                            <a href="" class="header__location__submenu__item__link">
-                                                <i class="fas fa-map-marker-alt header__location__submenu__item__link__icon"></i>
-                                                <p class="header__location__submenu__item__link__text">&ensp;Hồ Chí Minh</p>
-                                            </a>
-                                        </li>
-                                        <li class="header__location__submenu__item">
-                                            <a href="" class="header__location__submenu__item__link">
-                                                <i class="fas fa-map-marker-alt header__location__submenu__item__link__icon"></i>
-                                                <p class="header__location__submenu__item__link__text">&ensp;Hà Nội</p>
-                                            </a>
-                                        </li>
-                                        <li class="header__location__submenu__item">
-                                            <a href="" class="header__location__submenu__item__link">
-                                                <i class="fas fa-map-marker-alt header__location__submenu__item__link__icon"></i>
-                                                <p class="header__location__submenu__item__link__text">&ensp;Bình Dương</p>
-                                            </a>
-                                        </li>
-                                        <li class="header__location__submenu__item">
-                                            <a href="" class="header__location__submenu__item__link">
-                                                <i class="fas fa-map-marker-alt header__location__submenu__item__link__icon"></i>
-                                                <p class="header__location__submenu__item__link__text">&ensp;Hải Dương</p>
-                                            </a>
-                                        </li>
-                                        <li class="header__location__submenu__item">
-                                            <a href="" class="header__location__submenu__item__link">
-                                                <i class="fas fa-map-marker-alt header__location__submenu__item__link__icon"></i>
-                                                <p class="header__location__submenu__item__link__text">&ensp;Hải Phòng</p>
-                                            </a>
-                                        </li>
-                                        <li class="header__location__submenu__item">
-                                            <a href="" class="header__location__submenu__item__link">
-                                                <i class="fas fa-map-marker-alt header__location__submenu__item__link__icon"></i>
-                                                <p class="header__location__submenu__item__link__text">&ensp;Bắc Ninh</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>      
-                                <!-- Submenu modal -->
-                                <div class="header__location__submenu__modal"></div>
+                        </div>        
+                        <!-- Submenu modal -->
+                        <div class="header__location__submenu__modal"></div>
                         <!-- Search bar -->
                         <div class="header__search__bar">
                         <div class="header__search__bar__icon">
@@ -138,7 +96,7 @@
                                 </li>
                                 <li class="header__navbar__item">
                                     <div class="header__navbar__item__wrapper">
-                                        <a href="" class="header__navbar__item__link">
+                                        <a href="cart_detail.php" class="header__navbar__item__link">
                                             <i class="fas fa-shipping-fast"></i>
                                             <div class="header__navbar__item__link__desc__wrapper">
                                                 <p>Tra cứu</p>
@@ -149,7 +107,7 @@
                                 </li>
                                 <li class="header__navbar__item">
                                     <div class="header__navbar__item__wrapper">
-                                        <a href="" class="header__navbar__item__link">
+                                        <a href="cart.php" class="header__navbar__item__link">
                                                 <i class="ti-bag"></i>
                                             <div class="header__navbar__item__link__desc__wrapper">
                                                 <p>Giỏ</p>
@@ -159,16 +117,19 @@
                                     </div>
                                 </li>
                                 <li class="header__navbar__item">
-                                    <div class="header__navbar__item__wrapper__last">
-                                        <a href="" class="header__navbar__item__link">
+                                    <?php
+                                    echo '
+                                    <div class="header__navbar__item__wrapper">
+                                        <a href="login.php" class="header__navbar__item__link">
                                             <div class="header__navbar__item__link__icon__wrapper__last">
                                                 <i class="far fa-user-circle"></i>
                                             </div>
                                             <div class="header__navbar__item__link__desc__wrapper">
-                                                <p>Smember</p> 
+                                                <p>Đăng nhập</p>
                                             </div>
                                         </a>
-                                    </div>
+                                    </div>';
+                                    ?>
                                 </li>
                             </ul>
                         </div>
@@ -287,9 +248,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                         
-                        
+                        </div>          
                     </div>
                     <div class="c-3">
                         <div class="slide__ads__wrapper tablet__disable">
@@ -431,13 +390,11 @@
                         </svg>
                     </div>
                 </div>
-                <div class="c-6 flash__sale__box__tablet">
-                    
+                <div class="c-6 flash__sale__box__tablet">  
                     <div class="coutdown">  
                         <h1 class="coutdown__title">
                             Kết thúc sau
                         </h1>
-
                         <div class="time">
                             <h1 id="day">01</h1>
                         </div>
@@ -453,18 +410,9 @@
                         <div class="time">
                             <h1 id="sec">22</h1>
                         </div>
-
                     </div>
                 </div>
             </div>
-            <!-- Button -->
-                <div class="flash__sale__next__btn">
-                    <i class="fas fa-angle-right"></i>
-                </div>
-                <div class="flash__sale__prev__btn">
-                    <i class="fas fa-angle-left"></i>
-                </div> 
-            <!-- End button -->
             <div class="row flash__sale__product__list__wrapper">
                 <div class="flash__sale__product__list">
                     <?php
@@ -477,13 +425,7 @@
                     $row = $result->fetch_assoc();
                     $total_records = $row['total']; // Tổng số sản phẩm
 
-                    $total_pages = ceil($total_records / $limit); // Tính tổng số trang
-                    echo '<div class="pagination">';
-                    for ($i = 1; $i <= $total_pages; $i++) {
-                        echo '<a href="your_page.php?page=' . $i . '">' . $i . '</a> '; // Hiển thị các liên kết đến các trang
-                    }
-                    echo '</div>';
-
+                    
                     $sql = "SELECT * FROM product LIMIT $start, $limit";
                     $result = $conn->query($sql);
 
@@ -514,43 +456,34 @@
                     } else {
                         echo "Không có sản phẩm.";
                     }
+                    $total_pages = ceil($total_records / $limit); // Tính tổng số trang
                     $conn->close();
                     ?>
-                    <script>
-                        var FNextBtn = document.querySelector('.flash__sale__next__btn')
-                        var FPrevBtn = document.querySelector('.flash__sale__prev__btn')
-                        var FPrdoductList = document.querySelector('.flash__sale__product__list')
-                        var FPrdoductIem = document.querySelectorAll('.flash__sale__product')
-                        var Fl = 238
-                        var Findex = 0
-                        var FPositionX = 0
-                        FNextBtn.addEventListener('click',function(){
-                            FHandle(1)
-                        })
-                        FPrevBtn.addEventListener('click',function(){
-                            FHandle(-1)
-                        })
-                        function FHandle (Fnumber){
-                            if( Fnumber == 1){
-                                if( Findex > 10)return
-                                console.log('Next')
-                                FPositionX = FPositionX - Fl
-                                FPrdoductList.style = `transform: translateX(${FPositionX}px)`
-                                Findex++
-                                console.log('Findex' , Findex)
-                            }
-                            if( Fnumber == -1){
-                                if( Findex <= 0)return
-                                console.log('Prev')
-                                FPositionX = FPositionX + Fl
-                                FPrdoductList.style = `transform: translateX(${FPositionX}px)`
-                                Findex--
-                                console.log('Findex' , Findex)
-                            }
-                        }
-                    </script>
                 </div>
             </div>
+                <?php
+                echo '<div class="pagination">';
+                for ($i = 1; $i <= $total_pages; $i++) {
+                    echo '<a href="home.php?page=' . $i . '">' . $i . '</a> '; // Hiển thị các liên kết đến các trang
+                }
+                echo '</div>';
+                ?>
+                <style>
+                .pagination {
+                display: flex;
+                justify-content: center;
+            }
+            .pagination a {
+                color: white;
+                font-weight: bold;
+                text-decoration: none; /* Loại bỏ gạch chân */
+                padding: 5px 10px; /* Khoảng cách giữa các trang */
+                margin: 0 3px; /* Khoảng cách giữa các trang */
+            }
+            .pagination a:hover {
+                background-color: gray; /* Màu nền khi di chuột qua */
+            }
+                </style>
         </div>
         <div class="featured__phone grid wide">
             <!-- Title -->
@@ -561,39 +494,25 @@
                     </div>
                 </div>
                 <div class="c-7">
-                    <div class="featured__phone__related__tag">
-                        <a href="" class="futured__phone__item">Apple</a>
-                    </div>
-                    <div class="featured__phone__related__tag">
-                        <a href="" class="futured__phone__item">Samsung</a>
-                    </div>
-                    <div class="featured__phone__related__tag">
-                        <a href="" class="futured__phone__item">Xiaomi</a>
-                    </div>
-                    <div class="featured__phone__related__tag">
-                        <a href="" class="futured__phone__item">OPPO</a>
-                    </div>
-                    <div class="featured__phone__related__tag">
-                        <a href="" class="futured__phone__item">Nokia</a>
-                    </div>
-                    <div class="featured__phone__related__tag">
-                        <a href="" class="futured__phone__item">Realme</a>
-                    </div>
-                    <div class="featured__phone__related__tag">
-                        <a href="" class="futured__phone__item">Vsmart</a>
-                    </div>
-                    <div class="featured__phone__related__tag">
-                        <a href="" class="futured__phone__item">ASUS</a>
-                    </div>
-                    <div class="featured__phone__related__tag">
-                        <a href="" class="futured__phone__item">Vivo</a>
-                    </div>
-                    <div class="featured__phone__related__tag">
-                        <a href="" class="futured__phone__item">Xem tất cả</a>
-                    </div>
+                    <?php
+                    include 'connect.php'; // Đảm bảo đường dẫn đúng tới file connec.php
+
+                    $sql = "SELECT * FROM categories";
+                    $result = $conn->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo '<div class="featured__phone__related__tag">';
+                            echo '<a href="" class="futured__phone__item">' . $row["cname"] . '</a>';
+                            echo '</div>';
+                        }
+                        echo '</div>';
+                    } else {
+                        echo "Không có dữ liệu";
+                    }
+                    $conn->close(); // Đóng kết nối
+                    ?>  
                 </div>
-            </div>
-            
             <!-- Product List -->
             <?php
                 include 'connect.php';
@@ -611,18 +530,15 @@
                 if ($result->num_rows > 0) {
                     $rowCount = ceil($result->num_rows / $productsPerRow);
                     $currentRow = 0;
-
                     echo '<div class="featured__phone__product__list">';
 
                     while ($row = $result->fetch_assoc()) {
                         if ($currentRow >= $maxRows) {
                             break; // Đạt tới số hàng tối đa, dừng vòng lặp
                         }
-
                         if ($currentRow % $maxRows == 0) {
                             echo '<div class="row">';
                         }
-
                         echo '<div class="featured__phone__product__item">';
                         echo '<div class="flash__sale__discount">';
                         echo '<p>' . $row['pprice'] . '</p>';
@@ -656,16 +572,12 @@
                         echo '</div>';
                         echo '</div>';
                         echo '</div>';
-
                         if (($currentRow + 1) % $productsPerRow == 0 || $currentRow == $result->num_rows - 1) {
                             echo '</div>'; // Kết thúc hàng
                         }
-
                         $currentRow++;
                     }
-
                     echo '</div>'; // Kết thúc featured__phone__product__list
-
                     $totalPages = ceil($result->num_rows / $limit);
                     echo '<div class="so_trang">';
                     for ($i = 1; $i <= $totalPages; $i++) {
@@ -675,13 +587,91 @@
                 } else {
                     echo "Không có sản phẩm.";
                 }
-
                 $conn->close();
                 ?>
-
-
-
-           
+            </div>
+        </div>
+        <div class="footer__information__background">
+            <div class="footer__information grid wide">
+            <div class="row footer__information__row">
+                <!-- 1st -->
+                <div class="c-4">
+                        <div class="footer__information__text__1st">
+                            <a href="" class="footer__information__text__1st__a">Điện thoại</a>
+                            <span>-</span>
+                            <a href="" class="footer__information__text__1st__a">Black Friday 2021</a>
+                        </div>
+                        <div class="footer__information__text__2nd">
+                                <a href="" class="footer__information__text__2nd__a">Điện thoại iPhone 11</a>
+                                <span>|</span>
+                                <a href="" class="footer__information__text__2nd__a">Điện thoại iPhone 12</a>
+                                <span>|</span>
+                                <a href="" class="footer__information__text__2nd__a">Điện thoại iPhone 13</a>
+                            </div>
+                            <div class="footer__information__text__3rd">
+                                <a href="" class="footer__information__text__3rd__a">Điện thoại Samsung Galaxy Z Fold 3</a>
+                                <span>-</span>
+                                <a href="" class="footer__information__text__3rd__a">Đồng hồ Apple Watch Series 7</a>
+                            </div>
+                </div>
+                <!-- 2nd -->
+                <div class="c-4">
+                    <div class="footer__information__text__1st">
+                        <br>
+                    </div>
+                    <div class="footer__information__text__2nd">
+                        <a href="" class="footer__information__text__2nd__a">Điện thoại iPhone</a>
+                        <span>|</span>
+                        <a href="" class="footer__information__text__2nd__a">Điện thoại Samsung</a>
+                        <span>|</span>
+                        <a href="" class="footer__information__text__2nd__a">Điện thoại Oppo</a>
+                    </div>
+                    <div class="footer__information__text__3rd">
+                        <a href="" class="footer__information__text__2nd__a">Điện thoại Xiaomi</a>
+                        <span>|</span>
+                        <a href="" class="footer__information__text__2nd__a">Điện thoại Vivo</a>
+                        <span>|</span>
+                        <a href="" class="footer__information__text__2nd__a">Điện thoại OnePlus</a>
+                    </div>
+                </div>
+                <!-- 3rd -->
+                <div class="c-4">
+                    <div class="footer__information__text__1st">
+                        <a href="" class="footer__information__text__1st__a">Máy tính laptop</a>
+                        <span>-</span>
+                        <a href="" class="footer__information__text__1st__a">Smart home</a>
+                    </div>
+                    <div class="footer__information__text__2nd">
+                        <a href="" class="footer__information__text__2nd__a">Laptop HP</a>
+                        <span>-</span>
+                        <a href="" class="footer__information__text__2nd__a">Máy tính để bàn PC</a>
+                        <span>-</span>
+                        <a href="" class="footer__information__text__2nd__a">Màn hình máy tính</a>
+                        <span>-</span>
+                        <a href="" class="footer__information__text__2nd__a">Sim số đẹp</a>
+                    </div>
+                    <div class="footer__information__text__3rd">
+                        <a href="" class="footer__information__text__3rd__a">Robot hút bụi</a>
+                        <span>-</span>
+                        <a href="" class="footer__information__text__3rd__a">Camera</a>
+                        <span>|</span>
+                        <a href="" class="footer__information__text__3rd__a">Camera hành trình</a>
+                        <span>|</span>
+                        <a href="" class="footer__information__text__3rd__a">Camera hành trình Vietmap</a>
+                    </div>
+                </div>
+            </div> 
+            <div class="row footer__information__row__last">
+                    <p>Công ty TNHH Thương mại và dịch vụ kỹ thuật DIỆU PHÚC - GPĐKKD: 0316172372 do sở KH &amp; ĐT TP. HCM cấp ngày 02/03/2020. Địa chỉ: 350-352 Võ Văn Kiệt, Phường Cô Giang, Quận 1, Thành phố Hồ Chí Minh, Việt Nam. Điện thoại: 028.7108.9666.</p>
+                </div> 
+                <div class="row footer__certification">
+                    <div class="footer__certification__img__wrapper">
+                        <img src="./assets/img/footer information/1.png" alt="">
+                    </div>
+                    <div class="footer__certification__img__wrapper">
+                        <img src="./assets/img/footer information/2.png" alt="">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
