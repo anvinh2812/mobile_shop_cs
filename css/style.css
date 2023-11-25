@@ -397,7 +397,7 @@ html{
     padding-left: 5px;
     color: rgba(0,0,0,0.6);
 }
-.header__search__bar__modal{
+/* .header__search__bar__modal{
     position: fixed;
     top: 64px;
     left: 0;
@@ -407,7 +407,37 @@ html{
     display: none;
     z-index: 30;
     animation: modal-show-up ease 0.3s;
+    visibility: visible;
+} */
+
+.header__search__bar__modal {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    z-index: 999; /* Đặt z-index cho header__search__bar__modal, giá trị này có thể thấp hơn so với list_cart */
+    animation: modal-show-up ease 0.3s;
 }
+/*list cate*/
+.list_cate {
+    position: relative;
+    border-radius: 8px;
+    background-color: #c32b2b;
+    color: #fff;
+    z-index: 9999; /* Chọn một giá trị z-index lớn hơn giá trị của header__search__bar__modal */
+}
+.list_cate a {
+    display: block;
+    text-decoration: none;
+    color: #fff;
+}
+.list_cate a:hover {
+    background-color: #a30f0f;
+}
+
 /* Navbar list */
 .header__navbar{
     height: 42px;
@@ -866,9 +896,9 @@ html{
 }
 /* End countdown */
 .flash__sale__product{
-    width: 300px;
+    width: 260px;
     padding: 10px 10px 0 10px;
-    margin: 0 10px 15px 50px;
+    margin: 0 10px 15px 20px;
     background-color: white;
     box-shadow: rgb(60 64 67 / 10%) 0px 1px 2px 0px, 
     rgb(60 64 67 / 15%) 0px 2px 6px 2px;
@@ -1022,9 +1052,9 @@ html{
     color: #444;
 }
 .featured__phone__product__item{
-    width: 300px;
+    width: 260px;
     padding: 10px 10px 0 10px;
-    margin: 20px 10px 15px 50px;
+    margin: 20px 10px 15px 20px;
     height: 393px;
     box-shadow: rgb(60 64 67 / 10%) 0px 1px 2px 0px, 
     rgb(60 64 67 / 15%) 0px 2px 6px 2px;
