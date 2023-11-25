@@ -1,5 +1,7 @@
+
 <?php
     session_start();
+    require_once('../connect.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,8 +11,9 @@
     <link rel="shortcut icon" href="../assets/img/zalo suopprt/cellphones.png">
     <link rel="stylesheet" href="../assets/font/themify-icons-font/themify-icons/themify-icons.css">
     <link rel="stylesheet" href="../assets/font/fontawesome-free-5.15.4/fontawesome-free-5.15.4-web/css/all.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../action/javascript.js">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../action/javascript.js">
+
     <title>Nhom 13</title>
 </head>
 <body>
@@ -29,7 +32,7 @@
                         </div>
                         <!-- Logo Image -->
                         <div class="header__logo__img">
-                            <a href="home.php"><img src="./assets/img/Desktop logo/1.png" alt=""></a>
+                            <a href="home.php"><img src="../assets/img/Desktop logo/1.png" alt=""></a>
                         </div>        
                         <!-- Submenu modal -->
                         <div class="header__location__submenu__modal"></div>
@@ -51,7 +54,7 @@
                                 // Thực hiện AJAX để tìm kiếm và hiển thị kết quả trong #suggestion-box
                                 $.ajax({
                                     type: "GET",
-                                    url: "action/readProduct.php",
+                                    url: "../../action/readProduct.php",
                                     data: 'keyword=' + $(this).val(),
                                     beforeSend: function(){
                                         $("#search-box").css("background","#FFF url(./assets/icon/loadicon.png) no-repeat 165px");
@@ -92,10 +95,6 @@
 
                         search__modal.addEventListener('click', function(){
                             search__modal.style.display = 'none';
-                        });
-
-                        list_cate.addEventListener('mousedown', function(event) {
-                            event.stopPropagation();
                         });
                     </script>
                         <!-- Navbar list -->
@@ -180,7 +179,7 @@
                         <div class="slidebar">
                             <ul class="slidebar__list">
                             <?php
-                            require('connect.php'); 
+                            include '../connect.php' ;
                             $categoriesQuery = "SELECT cid, cname FROM categories";
                             $categoriesResult = $conn->query($categoriesQuery);
                             if ($categoriesResult->num_rows > 0) {
@@ -233,12 +232,12 @@
                                 </div>
                                 <!-- PC -->
                                 <div class="slider__top__wrapper" style="transform: translateX(-1369.96px);">
-                                        <img src="./assets/img/Slide/Slider/1.webp" alt="" class="slider__top__item">
-                                        <img src="./assets/img/Slide/Slider/2.webp" alt="" class="slider__top__item">
-                                        <img src="./assets/img/Slide/Slider/3.webp" alt="" class="slider__top__item">
-                                        <img src="./assets/img/Slide/Slider/4.webp" alt="" class="slider__top__item">
-                                        <img src="./assets/img/Slide/Slider/5.webp" alt="" class="slider__top__item">
-                                        <img src="./assets/img/Slide/Slider/6.webp" alt="" class="slider__top__item">                                
+                                        <img src="../assets/img/Slide/Slider/1.webp" alt="" class="slider__top__item">
+                                        <img src="../assets/img/Slide/Slider/2.webp" alt="" class="slider__top__item">
+                                        <img src="../assets/img/Slide/Slider/3.webp" alt="" class="slider__top__item">
+                                        <img src="../assets/img/Slide/Slider/4.webp" alt="" class="slider__top__item">
+                                        <img src="../assets/img/Slide/Slider/5.webp" alt="" class="slider__top__item">
+                                        <img src="../assets/img/Slide/Slider/6.webp" alt="" class="slider__top__item">                                
                                 </div>
                                 <!-- End PC -->
                             </div>
@@ -290,13 +289,13 @@
                     </div>
                     <div class="c-3">
                         <div class="slide__ads__wrapper tablet__disable">
-                        <a href=""><img src="./assets/img/Slide/Ads/1.webp" alt=""></a>
+                        <a href=""><img src="../assets/img/Slide/Ads/1.webp" alt=""></a>
                         </div>
                         <div class="slide__ads__wrapper tablet__disable">
-                            <a href=""><img src="./assets/img/Slide/Ads/2.webp" alt=""></a>
+                            <a href=""><img src="../assets/img/Slide/Ads/2.webp" alt=""></a>
                         </div>
                         <div class="slide__ads__wrapper tablet__disable">
-                            <a href=""><img src="./assets/img/Slide/Ads/3.webp" alt=""></a>
+                            <a href=""><img src="../assets/img/Slide/Ads/3.webp" alt=""></a>
                         </div>
                     </div>
             </div>
@@ -371,10 +370,10 @@
             <div class="row">
                 <div class="web__ads__box">
                     <a href="">
-                        <img src="./assets/img/Web ads/1.webp" alt="" class="web__ads__box__pc__img">
+                        <img src="../assets/img/Web ads/1.webp" alt="" class="web__ads__box__pc__img">
                     </a>
                     <a href="">
-                        <img src="./assets/Tablet img/slide ads.webp" alt="" class="web__ads__box__tablet__img">
+                        <img src="../assets/Tablet img/slide ads.webp" alt="" class="web__ads__box__tablet__img">
                     </a>
                 </div>
             </div>
@@ -456,7 +455,7 @@
             <div class="row flash__sale__product__list__wrapper">
                 <div class="flash__sale__product__list">
                     <?php
-                    include 'connect.php';
+                    include '../connect.php';
                     $limit = 5;
                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
                     $start = ($page - 1) * $limit;
@@ -476,7 +475,7 @@
                             echo '<p>' . $row["pprice"] . '</p>';
                             echo '</div>';
                             echo '<div class="flash__sale__product__img__wrapper">';
-                            echo '<a href=""><img src="' . $row["pimage"] . '" alt=""></a>';
+                            echo '<a href=""><img src="../assets/img/Feature phone/' . $row["pimage"] . '" alt=""></a>';
                             echo '</div>';
                             echo '<div class="flash__sale__product__desc">';
                             echo '<a href="" class="flash__sale__product__desc__title">';
@@ -536,7 +535,7 @@
                 <div class="c-7">
                     <div class="featured__phone__related__tag">
                         <?php
-                        include 'connect.php';
+                        include '../connect.php';
 
                         $sql = "SELECT * FROM categories";
                         $result = $conn->query($sql);
@@ -556,7 +555,7 @@
                 </div>
                 <!-- Product List -->
                 <?php
-                include 'connect.php';
+                include '../connect.php';
                 $productsPerPage = 5; // Số lượng sản phẩm trên mỗi trang
                 $category_id = isset($_GET['category']) ? $_GET['category'] : 1; // 1 là ID của danh mục mặc định
                 $page = isset($_GET['page']) && $_GET['page'] > 0 ? $_GET['page'] : 1;
@@ -588,7 +587,7 @@
                         echo '<p>' . $row['pprice'] . '</p>';
                         echo '</div>';
                         echo '<div class="featured__phone__product__img__wrapper">';
-                        echo '<a href=""><img src="' . $row['pimage'] . '" alt=""></a>';
+                        echo '<a href=""><img src="../assets/img/Feature phone/' . $row['pimage'] . '" alt=""></a>';
                         echo '</div>';
                         echo '<div class="featured__phone__product__desc">';
                         echo '<div class="featured__phone__product__desc__title">';
@@ -720,10 +719,10 @@
                 </div> 
                 <div class="row footer__certification">
                     <div class="footer__certification__img__wrapper">
-                        <img src="./assets/img/footer information/1.png" alt="">
+                        <img src="../assets/img/footer information/1.png" alt="">
                     </div>
                     <div class="footer__certification__img__wrapper">
-                        <img src="./assets/img/footer information/2.png" alt="">
+                        <img src="../assets/img/footer information/2.png" alt="">
                     </div>
                 </div>
             </div>
