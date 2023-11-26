@@ -9,7 +9,7 @@ $result = $conn->query($sql) or die($conn->error);
 	<?php
 	while ($row = $result->fetch_assoc()) {
 		$safeProductName = urlencode($row["pname"]);
-		$productDetailURL = 'product_detail.php?pname=' . $safeProductName;
+		$productDetailURL = '../detail/product_detail.php?pname=' . $safeProductName;
 
 		echo '<a href="' . $productDetailURL . '">';
 		echo '<div class="wrapper">';
