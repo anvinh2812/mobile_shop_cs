@@ -2,20 +2,16 @@
 session_start();
 
 // Kiểm tra xem người dùng đã đăng nhập hay chưa
-if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
-    // Lấy thông tin người dùng từ session nếu đã đăng nhập
-    $username = $_SESSION['TenDangNhap1'];
-    // Hiển thị thông tin người dùng hoặc thực hiện các hành động khác sau khi đăng nhập thành công
-    echo "Xin chào, $username! Bạn đã đăng nhập thành công.";
-    // ...
-} else {
-    echo '<script type="text/javascript">
-                alert("Thông tin đăng nhập bị sai. Vui lòng kiểm tra lại!");
-                window.location.href = "../pages/dashboard/login.php";
-              </script>';
-    //header("Location: ../pages/dashboard/login.php");
+if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
+    // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập và hiển thị thông báo
+    $_SESSION["error_message"] = "Thông tin đăng nhập bị sai. Vui lòng kiểm tra lại!";
+    header("Location: ../dashboard/login.php");
     exit();
 }
+
+// Nếu đã đăng nhập, lấy thông tin người dùng từ session và thực hiện các hành động sau khi đăng nhập thành công
+$username = $_SESSION['TenDangNhap1'];
+// ...
 ?>
 
 <!DOCTYPE html>
@@ -36,11 +32,9 @@ if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
 
 <body>
     <div id="main">
-
-
         <!-- Header -->
         <div class="header__height"></div>
-        <div class="header grid wide">
+        <div class="header">
             <div class="row">
                 <!-- Logo Icon -->
                 <div class="header__logo__wrapper ">
@@ -153,93 +147,81 @@ if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
                             </div>
                         </li>
                         <li class="header__navbar__item">
-                            <?php
-                                // Kiểm tra nếu đã đăng nhập
-                                if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
-                                    $username = $_SESSION['TenDangNhap1']; // Lấy tên người dùng từ session
-                                    echo '
-                                    <li class="header__navbar__item">
-                                        <div class="header__navbar__item__wrapper">
-                                            <a href="logout.php" class="header__navbar__item__link">
-                                                <div class="header__navbar__item__link__icon__wrapper__last">
-                                                    <i class="far fa-user-circle"></i>
-                                                </div>
-                                                <div class="header__navbar__item__link__desc__wrapper">
-                                                    <p>' . $username . '</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </li>';
-                                } else {
-                                    // Nếu chưa đăng nhập, chuyển hướng đến trang login.php
-                                    echo '
-                                    <li class="header__navbar__item">
-                                        <div class="header__navbar__item__wrapper">
-                                            <a href="login.php" class="header__navbar__item__link">
-                                                <div class="header__navbar__item__link__icon__wrapper__last">
-                                                    <i class="far fa-user-circle"></i>
-                                                </div>
-                                                <div class="header__navbar__item__link__desc__wrapper">
-                                                    <p>Đăng nhập</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </li>';
-                                }
-                            ?>
-                            
-                        </li>
-                            <div id="dropdown-smem" role="menu" class="dropdown-menu">
-                                <div class="dropdown-content">
-                                    <div class="dropdown-item custom-cursor-on-hover">
-                                        <a href="https://cellphones.com.vn/smember">
-                                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="svg-inline--fa fa-user-circle fa-w-16">
-                                                <path fill="currentColor" d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"></path>
-                                            </svg>
-                                            <span>&nbsp;Smember</span>
-                                        </a>
+                            <div class="header__navbar__item__wrapper">
+                                <div class="header__navbar__item__link" onclick="toggleDropdown()">
+                                    <div class="header__navbar__item__link__icon__wrapper__last">
+                                        <i class="far fa-user-circle"></i>
                                     </div>
-                                    <hr class="dropdown-divider">
-                                    <div class="dropdown-item">
-                                        <a href="#">
-                                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sign-out-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-sign-out-alt fa-w-16">
-                                                <path fill="currentColor" d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"></path>
-                                            </svg>
-                                            <span>&nbsp;Đăng xuất</span>
-                                        </a>
+                                    <div class="header__navbar__item__link__desc__wrapper">
+                                        <p id="username">
+                                            <?php
+                                            if (isset($_SESSION['TenDangNhap1'])) {
+                                                echo $_SESSION['TenDangNhap1']; // Hiển thị tên người dùng từ session
+                                            }
+                                            ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="dropdown" id="dropdown-smem">
+                                    <div class="dropdown-content">
+                                        <a href="../member/member.php">Trang cá nhân</a>
+                                        <a href="logout.php">Đăng xuất</a>
                                     </div>
                                 </div>
                             </div>
-                            <style>
-                                .dropdown-menu {
-                                    display: none;
-                                    /* Các thuộc tính CSS khác cho dropdown menu */
+                        </li>
+
+                        <style>
+                            /* Ẩn dropdown content mặc định */
+                            .dropdown-content {
+                            display: none;
+                            position: absolute;
+                            background-color: #fff;
+                            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                            z-index: 1;
+                            color: #000; /* Màu chữ đen */
+                            font-weight: bold; /* In đậm */
+                        }
+
+                        /* Hiển thị dropdown khi có class 'show' */
+                        .dropdown-content.show {
+                            display: block;
+                        }
+                        .dropdown-content a {
+                            display: block;
+                            width: 100%;
+                            white-space: normal;
+                            text-align: left;
+                            padding: 8px 16px;
+                            text-decoration: none;
+                            color: #000; /* Màu chữ đen */
+                            font-weight: bold; /* In đậm */
+                            transition: background-color 0.3s ease; /* Hiệu ứng hover */
+                        }
+
+                        .dropdown-content a:hover {
+                            background-color: #f0f0f0; /* Màu nền khi di chuột qua */
+                        }
+                        </style>
+
+                        <script>
+                            function toggleDropdown() {
+                                var dropdown = document.querySelector("#dropdown-smem .dropdown-content");
+                                dropdown.classList.toggle("show");
+                            }
+
+                            // Đóng dropdown nếu click ra ngoài dropdown
+                            window.onclick = function(event) {
+                                if (!event.target.closest('.header__navbar__item__wrapper')) {
+                                    var dropdowns = document.querySelectorAll(".dropdown-content");
+                                    dropdowns.forEach(function(dropdown) {
+                                        if (dropdown.classList.contains('show')) {
+                                            dropdown.classList.remove('show');
+                                        }
+                                    });
                                 }
-
-                                .dropdown-content {
-                                    display: none;
-                                    /* Các thuộc tính CSS khác cho dropdown content */
-                                }
-
-                                .dropdown-menu.show-dropdown {
-                                    display: block;
-                                }
-
-                                .dropdown-menu.show-dropdown .dropdown-content {
-                                    display: block;
-                                }
-
-                            </style>
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                var dropdownMenu = document.getElementById('dropdown-smem');
-
-                                dropdownMenu.addEventListener('click', function() {
-                                    dropdownMenu.classList.toggle('show-dropdown');
-                                });
-                            });
-
-                            </script>
+                            }
+                        </script>
 
                     </ul>
                 </div>
@@ -549,7 +531,7 @@ if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
                             echo '<p>' . $row["pprice"] . '</p>';
                             echo '</div>';
                             echo '<div class="flash__sale__product__img__wrapper">';
-                            echo '<img src="../assets/img/Feature phone/' . $row["pimage"] . '" alt="">';
+                            echo '<img src="../assets/images/' . $row["pimage"] . '" alt="">';
                             echo '</div>';
                             echo '<div class="flash__sale__product__desc">';
                             echo '<p class="flash__sale__product__desc__title__1st">' . $row["pname"] . '</p>';
@@ -667,7 +649,7 @@ if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
                         echo '<p>' . $row['pprice'] . '</p>';
                         echo '</div>';
                         echo '<div class="featured__phone__product__img__wrapper">';
-                        echo '<img src="../assets/img/Feature phone/' . $row['pimage'] . '">';
+                        echo '<img src="../assets/images/' . $row["pimage"] . '" alt="">';
                         echo '</div>';
                         echo '<div class="featured__phone__product__desc">';
                         echo '<div class="featured__phone__product__desc__title">';

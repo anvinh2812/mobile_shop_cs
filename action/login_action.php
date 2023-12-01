@@ -27,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Đăng nhập thành công vào bảng admin
         $_SESSION["login"] = true;
         $_SESSION["TenDangNhap1"] = $username; // Lưu tên đăng nhập, có thể sửa đổi theo cột thích hợp
-        $_SESSION["loi_dangnhap"] = "";
 
         header("Location: ../pages/admin/admin.php");
         exit();
@@ -37,20 +36,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Đăng nhập thành công vào bảng member
         $_SESSION["login"] = true;
         $_SESSION["TenDangNhap1"] = $username; // Lưu tên đăng nhập, có thể sửa đổi theo cột thích hợp
-        $_SESSION["loi_dangnhap"] = "";
         header("Location: ../pages/dashboard/home.php");
         exit();
     } else {
-        // Đăng nhập thất bại
-        $_SESSION["login"] = false;
-        $_SESSION["TenDangNhap1"] = "";
-        $_SESSION["loi_dangnhap"] = "Thông tin đăng nhập bị sai";
-
+        // Đăng nhập thất bại, đặt thông báo lỗi và quay lại trang đăng nhập với thông báo cảnh báo
+        $_SESSION["error_message"] = "Thông tin đăng nhập không đúng";
         echo '<script type="text/javascript">
-                alert("Thông tin đăng nhập bị sai. Vui lòng kiểm tra lại!");
+                alert("Thông tin đăng nhập không đúng. Vui lòng kiểm tra lại!");
                 window.location.href = "../pages/dashboard/login.php";
               </script>';
         exit();
     }
+} else {
+    // Nếu không phải là phương thức POST (truy cập trang trực tiếp), quay lại trang đăng nhập
+    header("Location: login.php");
+    exit();
 }
 ?>

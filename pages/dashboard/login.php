@@ -1,5 +1,13 @@
 
+<?php
+session_start();
 
+// Kiểm tra nếu có thông báo lỗi đăng nhập
+if(isset($_SESSION['error_message'])) {
+    echo '<div class="error">' . $_SESSION['error_message'] . '</div>';
+    unset($_SESSION['error_message']); // Xóa thông báo lỗi sau khi đã hiển thị
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
