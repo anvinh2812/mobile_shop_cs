@@ -26,7 +26,7 @@ if(isset($_SESSION['error_message'])) {
 </head>
 
 <body>
-
+    
     <div class="container" id="container">
         <div class="form-container sign-up">
         <form action="../../action/signup_action.php" method="POST">

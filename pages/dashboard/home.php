@@ -8,7 +8,6 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
     header("Location: ../dashboard/login.php");
     exit();
 }
-
 // Nếu đã đăng nhập, lấy thông tin người dùng từ session và thực hiện các hành động sau khi đăng nhập thành công
 $username = $_SESSION['TenDangNhap1'];
 // ...
@@ -25,8 +24,6 @@ $username = $_SESSION['TenDangNhap1'];
     <link rel="stylesheet" href="../assets/font/fontawesome-free-5.15.4/fontawesome-free-5.15.4-web/css/all.css">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/toast.css">
-    <link rel="stylesheet" href="../../action/javascript.js">
-
     <title>Nhom 13</title>
 </head>
 
@@ -48,8 +45,6 @@ $username = $_SESSION['TenDangNhap1'];
                 <div class="header__logo__img">
                     <a href="./home.php"><img src="../assets/img/Desktop logo/1.png" alt=""></a>
                 </div>
-                <!-- Submenu modal -->
-                <div class="header__location__submenu__modal"></div>
                 <!-- Search bar -->
                 <div class="header__search__bar">
                     <div class="header__search__bar__icon">
@@ -152,7 +147,7 @@ $username = $_SESSION['TenDangNhap1'];
                                     <div class="header__navbar__item__link__icon__wrapper__last">
                                         <i class="far fa-user-circle"></i>
                                     </div>
-                                    <div class="header__navbar__item__link__desc__wrapper">
+                                    <div class="header__navbar__item__link__desc__wrapper_last">
                                         <p id="username">
                                             <?php
                                             if (isset($_SESSION['TenDangNhap1'])) {
@@ -228,9 +223,9 @@ $username = $_SESSION['TenDangNhap1'];
             </div>
         </div>
         <!-- Slide -->
-        <div class="slide grid wide">
+        <div class="slide">
             <div class="row">
-                <div class="c-2 tablet__slidebar">
+                <div class="c-2">
                     <div class="slidebar">
                         <ul class="slidebar__list">
                             <?php
@@ -276,7 +271,7 @@ $username = $_SESSION['TenDangNhap1'];
                         </ul>
                     </div>
                 </div>
-                <div class="c-7 pc__slider__wrapper">
+                <div class="c-7">
                     <div class="slider">
                         <div class="slider__top">
                             <div class="slider__top__next__btn">
@@ -343,85 +338,21 @@ $username = $_SESSION['TenDangNhap1'];
                     </div>
                 </div>
                 <div class="c-3">
-                    <div class="slide__ads__wrapper tablet__disable">
+                    <div class="slide__ads__wrapper">
                         <a href=""><img src="../assets/img/Slide/Ads/1.webp" alt=""></a>
                     </div>
-                    <div class="slide__ads__wrapper tablet__disable">
+                    <div class="slide__ads__wrapper">
                         <a href=""><img src="../assets/img/Slide/Ads/2.webp" alt=""></a>
                     </div>
-                    <div class="slide__ads__wrapper tablet__disable">
+                    <div class="slide__ads__wrapper">
                         <a href=""><img src="../assets/img/Slide/Ads/3.webp" alt=""></a>
                     </div>
                 </div>
             </div>
-            <script>
-                var NextBtn = document.querySelector('.slider__top__next__btn')
-                var PrevtBtn = document.querySelector('.slider__top__prev__btn')
-                var SlideWrapper = document.querySelector('.slider__top__wrapper')
-                var l = 684.98
-                var index = 0
-                var positionX = 0
-                // Automatic Slider
-                var randomNumber
-                setInterval(function() {
-                    randomNumber = Math.floor(Math.random() * 5)
-                    switch (randomNumber) {
-                        case 0:
-                            index = 0
-                            break
-                        case 1:
-                            index = 1
-                            positionX = -l
-                            SlideWrapper.style = `transform: translateX(${positionX}px);`
-                            break
-                        case 2:
-                            index = 2
-                            positionX = -l * 2
-                            SlideWrapper.style = `transform: translateX(${positionX}px);`
-                            break
-                        case 3:
-                            index = 3
-                            positionX = -l * 3
-                            SlideWrapper.style = `transform: translateX(${positionX}px);`
-                            break
-                        case 4:
-                            index = 4
-                            positionX = -l * 4
-                            SlideWrapper.style = `transform: translateX(${positionX}px);`
-                            break
-                        case 5:
-                            index = 5
-                            positionX = -l * 4
-                            SlideWrapper.style = `transform: translateX(${positionX}px);`
-                            break
-                    }
-                }, 5000)
-                // Button Slider
-                NextBtn.addEventListener('click', function() {
-                    Handle(1)
-                })
-                PrevtBtn.addEventListener('click', function() {
-                    Handle(-1)
-                })
-
-                function Handle($number) {
-                    if ($number == 1) {
-                        if (index >= 5) return
-                        positionX = positionX - l
-                        SlideWrapper.style = `transform: translateX(${positionX}px);`
-                            ++index
-                        console.log('index', index)
-                    } else if ($number == -1) {
-                        if (index <= 0) return
-                        positionX = positionX + l
-                        SlideWrapper.style = `transform: translateX(${positionX}px);`
-                            --index
-                    }
-                }
-            </script>
+            
         </div>
         <!-- ADS -->
-        <div class="web__ads gird wide">
+        <div class="web__ads">
             <div class="row">
                 <div class="web__ads__box">
                     <a href="">
@@ -434,7 +365,7 @@ $username = $_SESSION['TenDangNhap1'];
             </div>
         </div>
         <!-- flash__sale -->
-        <div class="flash__sale grid wide">
+        <div class="flash__sale">
             <div class="row">
                 <div class="c-6">
                     <div class="flash__hot__sale">
@@ -531,7 +462,7 @@ $username = $_SESSION['TenDangNhap1'];
                             echo '<p>' . $row["pprice"] . '</p>';
                             echo '</div>';
                             echo '<div class="flash__sale__product__img__wrapper">';
-                            echo '<img src="../assets/images/' . $row["pimage"] . '" alt="">';
+                            echo '<img src="../assets/images/' . $row["pimage"] . '" alt="điện thoại ' . $row["pname"] . '">';
                             echo '</div>';
                             echo '<div class="flash__sale__product__desc">';
                             echo '<p class="flash__sale__product__desc__title__1st">' . $row["pname"] . '</p>';
@@ -586,7 +517,7 @@ $username = $_SESSION['TenDangNhap1'];
             </style>
         </div>
         <!-- hot__phone -->
-        <div class="featured__phone grid wide">
+        <div class="featured__phone">
             <div class="row featured__phone__gutter">
                 <div class="c-3">
                     <div class="featured__phone__title">
@@ -649,7 +580,7 @@ $username = $_SESSION['TenDangNhap1'];
                         echo '<p>' . $row['pprice'] . '</p>';
                         echo '</div>';
                         echo '<div class="featured__phone__product__img__wrapper">';
-                        echo '<img src="../assets/images/' . $row["pimage"] . '" alt="">';
+                        echo '<img src="../assets/images/' . $row["pimage"] . '" alt="điện thoại ' . $row["pname"] . '">';
                         echo '</div>';
                         echo '<div class="featured__phone__product__desc">';
                         echo '<div class="featured__phone__product__desc__title">';
@@ -714,7 +645,7 @@ $username = $_SESSION['TenDangNhap1'];
 
     </div>
     <div class="footer__information__background">
-        <div class="footer__information grid wide">
+        <div class="footer__information">
             <div class="row footer__information__row">
                 <!-- 1st -->
                 <div class="c-4">
@@ -797,5 +728,5 @@ $username = $_SESSION['TenDangNhap1'];
         </div>
     </div>
 </body>
-
+<script src="../../action/slide_ads.js"></script>
 </html>

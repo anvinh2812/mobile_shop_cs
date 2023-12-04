@@ -24,6 +24,7 @@ html{
     display: flex;
     flex-wrap: wrap;
     margin: 0 ;
+    width: 80%;
 }
 .gutter{
     padding: 0 4px;
@@ -34,9 +35,7 @@ html{
 .c-3{
     width: 25%;
 }
-.c-4{
-    width: ;
-}
+
 .c-6{
     width: 50%;
 }
