@@ -12,21 +12,24 @@ if (!isset($_GET['pname'])) {
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="../assets/img/zalo suopprt/cellphones.png">
-        <link rel="stylesheet" href="../assets/font/themify-icons-font/themify-icons/themify-icons.css">
-        <link rel="stylesheet" href="../assets/font/fontawesome-free-5.15.4/fontawesome-free-5.15.4-web/css/all.css">
-        <link rel="stylesheet" href="../../css/style.css">
-        <link rel="stylesheet" href="../../action/javascript.js">
-        <link rel="stylesheet" href="../../css/chitietsanpham.css">
-        <link rel="stylesheet" href="../../css/dropbox.css">
-        <link rel="stylesheet" href="../../action/dropbox.js">
-        <title>Product Details - <?php echo $row['pname']; ?></title>
-    </head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../assets/img/zalo suopprt/cellphones.png">
+    <link rel="stylesheet" href="../assets/font/themify-icons-font/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="../assets/font/fontawesome-free-5.15.4/fontawesome-free-5.15.4-web/css/all.css">
+    <link rel="stylesheet" href="../../css/home.css">
+    <link rel="stylesheet" href="../../action/javascript.js">
+    <link rel="stylesheet" href="../../css/product_detail.css">
+    <link rel="stylesheet" href="../../css/dropbox.css">
+    <link rel="stylesheet" href="../../action/dropbox.js">
+    <title>Product Details - <?php echo $row['pname']; ?></title>
+</head>
+
+<body>
     <div class="header__height"></div>
-        <div class="header">
+    <div class="header">
             <div class="row">
                 <!-- Logo Icon -->
                 <div class="header__logo__wrapper ">
@@ -37,8 +40,8 @@ if (!isset($_GET['pname'])) {
                     <span class="header__logo__line__3rd"></span>
                 </div>
                 <!-- Logo Image -->
-                <div class="header__logo__img">
-                    <a href="../dashboard/home.php"><img src="../assets/img/Desktop logo/1.png" alt=""></a>
+                <div v class="header__logo__img">
+                    <a href="./home.php"><img src="../assets/img/Desktop logo/1.png" alt=""></a>
                 </div>
                 <!-- Search bar -->
                 <div class="header__search__bar">
@@ -105,17 +108,6 @@ if (!isset($_GET['pname'])) {
                     <ul class="header__navbar__list">
                         <li class="header__navbar__item">
                             <div class="header__navbar__item__wrapper">
-                                <a href="" class="header__navbar__item__link">
-                                    <i class="fas fa-phone-alt"></i>
-                                    <div class="header__navbar__item__link__desc__wrapper">
-                                        <p>Gọi mua hàng</p>
-                                        <p>1800.2097</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <li class="header__navbar__item">
-                            <div class="header__navbar__item__wrapper">
                                 <a href="cart_detail.php" class="header__navbar__item__link">
                                     <i class="fas fa-shipping-fast"></i>
                                     <div class="header__navbar__item__link__desc__wrapper">
@@ -160,157 +152,223 @@ if (!isset($_GET['pname'])) {
                                 </div>
                             </div>
                         </li>
+
+                        <style>
+                            /* Ẩn dropdown content mặc định */
+                            .dropdown-content {
+                            display: none;
+                            position: absolute;
+                            background-color: #fff;
+                            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                            z-index: 1;
+                            color: #000; /* Màu chữ đen */
+                            font-weight: bold; /* In đậm */
+                        }
+
+                        /* Hiển thị dropdown khi có class 'show' */
+                        .dropdown-content.show {
+                            display: block;
+                        }
+                        .dropdown-content a {
+                            display: block;
+                            width: 100%;
+                            white-space: normal;
+                            text-align: left;
+                            padding: 8px 16px;
+                            text-decoration: none;
+                            color: #000; /* Màu chữ đen */
+                            font-weight: bold; /* In đậm */
+                            transition: background-color 0.3s ease; /* Hiệu ứng hover */
+                        }
+
+                        .dropdown-content a:hover {
+                            background-color: #f0f0f0; /* Màu nền khi di chuột qua */
+                        }
+                        </style>
+
+                        <script>
+                            function toggleDropdown() {
+                                var dropdown = document.querySelector("#dropdown-smem .dropdown-content");
+                                dropdown.classList.toggle("show");
+                            }
+
+                            // Đóng dropdown nếu click ra ngoài dropdown
+                            window.onclick = function(event) {
+                                if (!event.target.closest('.header__navbar__item__wrapper')) {
+                                    var dropdowns = document.querySelectorAll(".dropdown-content");
+                                    dropdowns.forEach(function(dropdown) {
+                                        if (dropdown.classList.contains('show')) {
+                                            dropdown.classList.remove('show');
+                                        }
+                                    });
+                                }
+                            }
+                        </script>
+
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="product_detail">  
-            <h1><?php echo $pname; ?></h1>
-            <div class="row_product_detail">
-                <div class="row_product_picture">
-                    <?php
-                        include('../connect.php');
-                        // Lấy giá trị của 'pname' từ trang web khác (giả sử là biến $receivedPname)
-                        $receivedPname = $_GET['pname']; // Biến này chứa 'pname' từ URL hoặc dữ liệu nhận được từ trang web khác
-                        // Escape các giá trị để tránh các vấn đề bảo mật
-                        $escapedPname = $conn->real_escape_string($receivedPname);
-                        $sql = "SELECT * FROM product WHERE pname = '$escapedPname'"; // Thực hiện truy vấn dựa trên 'pname'
-                        $result = $conn->query($sql);
-                        if ($result->num_rows > 0) {
-                            // Lấy URL của hình ảnh từ kết quả truy vấn
-                            $row = $result->fetch_assoc();
-                            $pname = $row['pname'];
-                            // Hiển thị hình ảnh trong thẻ <img>
-                            echo '<img src="../assets/images/' . $row["pimage"] . '" alt="điện thoại ' . $row["pname"] . '">';
-                        } else {
-                            echo "Không có dữ liệu";
-                        }
-                        // Đóng kết nối với cơ sở dữ liệu
-                        $conn->close();
-                    ?>
-                </div>
-                <div class="row_product_price">
-                    <div class="row_product_area_price">
+    <div class="product_detail">
+    <?php
+        if (isset($_GET['pname'])) {
+            $phoneName = $_GET['pname'];
+            echo '<h1 style =>' . $phoneName . '</h1>';
+        }
+    ?>
+
+        <div class="product_detail_row">
+            <div class="product_detail_container">
+                <div class="product_detail_picture">
                     <?php
                     include('../connect.php');
-
-                    // Nhận giá trị 'pname' từ trang web hoặc dữ liệu được chuyển đến từ nơi khác
-                    $receivedPname = $_GET['pname']; // Giả sử 'pname' được truyền qua tham số URL
-
-                    // Escape giá trị 'pname' để tránh các vấn đề bảo mật
+                    $receivedPname = $_GET['pname'];
                     $escapedPname = $conn->real_escape_string($receivedPname);
-
-                    // Truy vấn để lấy giá sản phẩm từ bảng 'products' dựa trên 'pname'
-                    $sql = "SELECT pprice FROM product WHERE pname = '$escapedPname'";
+                    $sql = "SELECT * FROM product WHERE pname = '$escapedPname'";
                     $result = $conn->query($sql);
-
                     if ($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
-                        $productPrice = $row['pprice'];
-                       // echo '<div class="area_price">';
-                        // Hiển thị giá sản phẩm
-                        echo 'Giá sản phẩm ' . $escapedPname . ' là: ' . $productPrice;
-                        //echo '</div>';
+                        $pname = $row['pname'];
+                        echo '<img src="../assets/images/' . $row["pimage"] . '" alt="điện thoại ' . $row["pname"] . '">';
                     } else {
-                        echo "Không có thông tin sản phẩm";
+                        echo "Không có dữ liệu";
                     }
-                    // Đóng kết nối với cơ sở dữ liệu
                     $conn->close();
                     ?>
-                    </div>
                 </div>
-                <div class="info_product">
+                <div class="product_detail_info_product">
                     <h2>Thông số kỹ thuật</h2>
                     <?php
-                    include('../connect.php');
+                        if (isset($_GET['pname'])) {
+                            include('../connect.php');
 
-                    // Truy vấn thông tin từ bảng 'attribute' dựa trên 'pid' (giả sử 'pid' là 1)
-                    $sql = "SELECT * FROM attribute WHERE pid = 1"; // Thay 'pid' thành giá trị tương ứng nếu cần
-                    $result = $conn->query($sql);
+                            // Lấy pname từ URL
+                            $receivedPname = $conn->real_escape_string($_GET['pname']);
 
-                    if ($result->num_rows > 0) {   
-                        echo '<ul class="info">';
-                        // Hiển thị thông tin từ bảng 'attribute'
-                        while ($row = $result->fetch_assoc()) {
-                            echo '<li>';
-                            echo '<p>' . $row['aname'] . '</p>';
-                            echo '<div>' . $row['avalue'] . '</div>';
-                            echo '</li>';
+                            // Truy vấn pid từ bảng product
+                            $pidQuery = "SELECT pid FROM product WHERE pname = '$receivedPname'";
+                            $pidResult = $conn->query($pidQuery);
+
+                            if ($pidResult->num_rows > 0) {
+                                $row = $pidResult->fetch_assoc();
+                                $pid = $row['pid'];
+
+                                // Truy vấn thông số từ bảng attribute dựa trên pid
+                                $sql = "SELECT * FROM attribute WHERE pid = $pid";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    echo '<ul class="info">';
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo '<li>';
+                                        echo '<p>' . $row['aname'] . ':' . '</p>';
+                                        echo '<div>' . $row['avalue'] . '</div>';
+                                        echo '</li>';
+                                    }
+                                    echo '</ul>';
+                                } else {
+                                    echo "Không có thông tin sản phẩm";
+                                }
+                            } else {
+                                echo "Không tìm thấy sản phẩm";
+                            }
+                            $conn->close();
                         }
-                        echo '</ul>';
-                    } else {
-                        echo "Không có thông tin sản phẩm";
-                    }
-                    // Đóng kết nối với cơ sở dữ liệu
-                    $conn->close();
                     ?>
+
+                </div>
             </div>
+            <div class="product_detail_payment">
+                <h2 style="margin-top: 9%;">Thanh toán</h2>
+                <?php
+                include('../connect.php');
+                $receivedPname = $_GET['pname'];
+                $escapedPname = $conn->real_escape_string($receivedPname);
+                $sql = "SELECT pprice FROM product WHERE pname = '$escapedPname'";
+                $result = $conn->query($sql);
+                
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    // Sửa lại thứ tự của các thẻ div để mục giá tiền nằm bên trên nút thanh toán
+                    echo '<div class="payment_price">';
+                    echo '<p>Giá: ' . $row['pprice'] . '</p>';
+                    echo '</div>';
+
+                } else {
+                    echo "Không có thông tin sản phẩm";
+                }
+                
+                $conn->close();
+                ?>
+                <div class="payment_buttons">
+                    <button type="button">Mua ngay</button>
+                    <button type="button">Thêm vào giỏ hàng</button> 
+                </div>
+            </div>
+
         </div>
         <hr>
-            <div class="comment-area">
-                <div class="guiBinhLuan">
-                    <div class="stars">
-                        <form action="">
-                            <input class="star star-5" id="star-5" value="5" type="radio" name="star">
-                            <label class="star star-5 custom-cursor-default-hover" for="star-5" title="Tuyệt vời"></label>
+        <div class="comment-area">
+    <form action="comment_action.php" method="POST" class="guibinhluan">
+        <textarea name="comment" placeholder="Type your comment here..."></textarea>
+        <button type="submit">Gửi</button>
+    </form>
+</div>
+    <div class="container_comment">
+        <!-- Hiển thị bình luận đã có -->
+        <?php
+            if (isset($_GET['pname'])) {
+                include '../connect.php';
+                $receivedPname = $conn->real_escape_string($_GET['pname']);
 
-                            <input class="star star-4" id="star-4" value="4" type="radio" name="star">
-                            <label class="star star-4 custom-cursor-default-hover" for="star-4" title="Tốt"></label>
+                // Tìm pid từ bảng product dựa trên pname
+                $pidQuery = "SELECT pid FROM product WHERE pname = '$receivedPname'";
+                $pidResult = $conn->query($pidQuery);
 
-                            <input class="star star-3" id="star-3" value="3" type="radio" name="star">
-                            <label class="star star-3" for="star-3" title="Tạm"></label>
+                if ($pidResult->num_rows > 0) {
+                    $row = $pidResult->fetch_assoc();
+                    $pid = $row['pid'];
+                    // Tiếp tục thực hiện truy vấn để lấy dữ liệu từ bảng comment với pid đã có
+                    $commentQuery = "SELECT * FROM comment WHERE pid = $pid";
+                    $commentResult = $conn->query($commentQuery);
 
-                            <input class="star star-2" id="star-2" value="2" type="radio" name="star">
-                            <label class="star star-2" for="star-2" title="Khá"></label>
+                    if ($commentResult->num_rows > 0) {
+                        while ($comment = $commentResult->fetch_assoc()) {
+                            $mid = $comment['mid'];
 
-                            <input class="star star-1" id="star-1" value="1" type="radio" name="star">
-                            <label class="star star-1" for="star-1" title="Tệ"></label>
-                        </form>
-                    </div>
-                    <textarea maxlength="250" id="inpBinhLuan" placeholder="Viết suy nghĩ của bạn vào đây..."></textarea>
-                    <input id="btnBinhLuan" type="button" onclick="checkGuiBinhLuan()" value="GỬI BÌNH LUẬN">
-                </div>
-                <div class="container_comment">
-                    <?php
-                    if (isset($_GET['pname'])) {
-                        include '../connect.php';
-                        $receivedPname = $_GET['pname'];
+                            // Truy vấn để lấy mname từ members table dựa trên mid
+                            $memberQuery = "SELECT mname FROM member WHERE mid = $mid";
+                            $memberResult = $conn->query($memberQuery);
 
-                        $escapedPname = $conn->real_escape_string($receivedPname);
+                            if ($memberResult->num_rows > 0) {
+                                $member = $memberResult->fetch_assoc();
+                                $mname = $member['mname'];
 
-                        // Tìm pid từ bảng product dựa trên pname
-                        $pidQuery = "SELECT pid FROM product WHERE pname = '$escapedPname'";
-                        $pidResult = $conn->query($pidQuery);
-
-                        if ($pidResult->num_rows > 0) {
-                            $row = $pidResult->fetch_assoc();
-                            $pid = $row['pid'];
-                            // Tiếp tục thực hiện truy vấn để lấy dữ liệu từ bảng comment với pid đã có
-                            $commentQuery = "SELECT * FROM comment WHERE pid = $pid";
-                            $commentResult = $conn->query($commentQuery);
-
-                            if ($commentResult->num_rows > 0) {
-                                while ($comment = $commentResult->fetch_assoc()) {
-                                    echo '<div class="comment">
+                                echo '<div class="comment">
                                             <i class="fa fa-user-circle"></i>
-                                            <h4>' . $comment['mid'] . '<span>';
-                                    echo '</span></h4>
+                                            <h4>' . $mname . '<span>';
+                                echo '</span></h4>
                                             <p>' . $comment['content'] . '</p>
                                             <span class="time">' . $comment['comdate'] . '</span>
                                         </div>';
-                                }
-
-                                echo '</div>';
                             } else {
-                                echo "Chưa có bình luận nào cho sản phẩm này.";
+                                echo "Không tìm thấy thông tin thành viên.";
                             }
-                        } else {
-                            echo "Không tìm thấy sản phẩm.";
                         }
+                        echo '</div>';
+                    } else {
+                        echo "Chưa có bình luận nào cho sản phẩm này.";
                     }
-                    ?>
-                </div>
-            </div>
-        </div>
-    </body>
+                } else {
+                    echo "Không tìm thấy sản phẩm.";
+                }
+            }
+        ?>
+
+    </div>
+</div>
+
+    </div>
+</body>
+
 </html>

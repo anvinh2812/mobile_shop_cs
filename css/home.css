@@ -24,7 +24,7 @@ html{
     display: flex;
     flex-wrap: wrap;
     margin: 0 ;
-    width: 80%;
+    width: 100%;
 }
 .gutter{
     padding: 0 4px;
@@ -180,8 +180,10 @@ html{
     display: flex;
     align-items: center;
     margin-right: 15px;
+    margin-left: 100px;
 }
 .header__logo{
+    margin-left:  10%;
     width: 30px;
     height: 30px;
     border: 2px solid white;

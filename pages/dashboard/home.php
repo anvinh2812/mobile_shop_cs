@@ -1,16 +1,11 @@
 <?php
 session_start();
-
-// Kiểm tra xem người dùng đã đăng nhập hay chưa
 if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
-    // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập và hiển thị thông báo
     $_SESSION["error_message"] = "Thông tin đăng nhập bị sai. Vui lòng kiểm tra lại!";
     header("Location: ../dashboard/login.php");
     exit();
 }
-// Nếu đã đăng nhập, lấy thông tin người dùng từ session và thực hiện các hành động sau khi đăng nhập thành công
 $username = $_SESSION['TenDangNhap1'];
-// ...
 ?>
 
 <!DOCTYPE html>
@@ -22,15 +17,16 @@ $username = $_SESSION['TenDangNhap1'];
     <link rel="shortcut icon" href="../assets/img/zalo suopprt/cellphones.png">
     <link rel="stylesheet" href="../assets/font/themify-icons-font/themify-icons/themify-icons.css">
     <link rel="stylesheet" href="../assets/font/fontawesome-free-5.15.4/fontawesome-free-5.15.4-web/css/all.css">
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/home.css">
     <link rel="stylesheet" href="../../css/toast.css">
+    <script src="../../action/slide_ads.js"></script>
     <title>Nhom 13</title>
 </head>
 
 <body>
     <div id="main">
         <!-- Header -->
-        <div class="header__height"></div>
+       <div class="header__height"></div>
         <div class="header">
             <div class="row">
                 <!-- Logo Icon -->
@@ -42,7 +38,7 @@ $username = $_SESSION['TenDangNhap1'];
                     <span class="header__logo__line__3rd"></span>
                 </div>
                 <!-- Logo Image -->
-                <div class="header__logo__img">
+                <div v class="header__logo__img">
                     <a href="./home.php"><img src="../assets/img/Desktop logo/1.png" alt=""></a>
                 </div>
                 <!-- Search bar -->
@@ -108,17 +104,6 @@ $username = $_SESSION['TenDangNhap1'];
                 <!-- Navbar list -->
                 <div class="header__navbar">
                     <ul class="header__navbar__list">
-                        <li class="header__navbar__item">
-                            <div class="header__navbar__item__wrapper">
-                                <a href="" class="header__navbar__item__link">
-                                    <i class="fas fa-phone-alt"></i>
-                                    <div class="header__navbar__item__link__desc__wrapper">
-                                        <p>Gọi mua hàng</p>
-                                        <p>1800.2097</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
                         <li class="header__navbar__item">
                             <div class="header__navbar__item__wrapper">
                                 <a href="cart_detail.php" class="header__navbar__item__link">
@@ -267,7 +252,6 @@ $username = $_SESSION['TenDangNhap1'];
                             }
                             $conn->close();
                             ?>
-
                         </ul>
                     </div>
                 </div>
@@ -449,8 +433,6 @@ $username = $_SESSION['TenDangNhap1'];
                     $result = $conn->query($sql);
                     $row = $result->fetch_assoc();
                     $total_records = $row['total']; // Tổng số sản phẩm
-
-
                     $sql = "SELECT * FROM product LIMIT $start, $limit";
                     $result = $conn->query($sql);
 
@@ -728,5 +710,5 @@ $username = $_SESSION['TenDangNhap1'];
         </div>
     </div>
 </body>
-<script src="../../action/slide_ads.js"></script>
+
 </html>
