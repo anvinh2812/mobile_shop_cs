@@ -19,7 +19,7 @@ $username = $_SESSION['TenDangNhap1'];
     <link rel="stylesheet" href="../assets/font/fontawesome-free-5.15.4/fontawesome-free-5.15.4-web/css/all.css">
     <link rel="stylesheet" href="../../css/home.css">
     <link rel="stylesheet" href="../../css/toast.css">
-    <script src="../../action/slide_ads.js"></script>
+    
     <title>Nhom 13</title>
 </head>
 
@@ -353,7 +353,7 @@ $username = $_SESSION['TenDangNhap1'];
             <div class="row">
                 <div class="c-6">
                     <div class="flash__hot__sale">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="272.222" height="38.337" viewBox="0 0 272.222 38.337">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="../assets/bg/hot-sale-giang-sinh-title_1_4_.png" width="272.222" height="38.337" viewBox="0 0 272.222 38.337">
                             <defs>
                                 <filter id="Path_1419" x="27.652" y="8.388" width="111.756" height="22.383" filterUnits="userSpaceOnUse">
                                     <feOffset dy="1" input="SourceAlpha"></feOffset>
@@ -710,5 +710,5 @@ $username = $_SESSION['TenDangNhap1'];
         </div>
     </div>
 </body>
-
+<script src="../../action/slide_ads.js"></script>
 </html>

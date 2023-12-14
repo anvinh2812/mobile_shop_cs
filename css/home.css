@@ -780,14 +780,16 @@ html{
     height: 100%;
 }
 /* End Web Ads */
+
 /* Flash Sale */
 .flash__sale{
     border-radius: 8px;
-    background: linear-gradient(
+    /* background: linear-gradient(
         180deg,
         #2d068d,
         #ad12cb
-    ); 
+    );  */
+    background-image: url(../pages/assets/bg/hot-sale-giang-sinh_2.png);
     margin-bottom: 15px;
     position: relative;
 }
@@ -1189,9 +1191,9 @@ html{
 .footer{
     padding: 10px 0;
 }
-.footer__1st{
+/* .footer__1st{
 
-}
+} */
 .footer__1st__text__wrapper{
     display: flex;
     flex-direction: column;
@@ -1449,9 +1451,9 @@ html{
     overflow-y: auto;
     border-left: 1px solid rgba(0,0,0,0.1);
 }
-.talk__with__supporter__form__body__your__info{
+/* .talk__with__supporter__form__body__your__info{
    
-}
+} */
 .talk__with__supporter__form__body__your__info__title{
     font-size: 0.9rem;
     font-weight: 700;
@@ -1522,9 +1524,9 @@ html{
     align-items: center;
     justify-content: space-between;
 }
-.talk__with__supporter__form__body__message{
+/* .talk__with__supporter__form__body__message{
 
-}
+} */
 .talk__with__supporter__form__body__message input{
     width: 245px;
     height: 62px;

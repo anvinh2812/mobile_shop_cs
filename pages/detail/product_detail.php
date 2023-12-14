@@ -41,7 +41,7 @@ if (!isset($_GET['pname'])) {
                 </div>
                 <!-- Logo Image -->
                 <div v class="header__logo__img">
-                    <a href="./home.php"><img src="../assets/img/Desktop logo/1.png" alt=""></a>
+                    <a href="../dashboard/home.php"><img src="../assets/img/Desktop logo/1.png" alt=""></a>
                 </div>
                 <!-- Search bar -->
                 <div class="header__search__bar">
