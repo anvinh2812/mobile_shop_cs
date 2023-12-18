@@ -16,15 +16,14 @@ html{
     display: block;
     padding: 0;
 }
-/* .wide{
+.wide{
     width: 1200px;
     margin: 0 auto;
-} */
+}
 .row{
     display: flex;
     flex-wrap: wrap;
     margin: 0 ;
-    width: 100%;
 }
 .gutter{
     padding: 0 4px;
@@ -158,8 +157,6 @@ html{
     z-index: 11;
     display: flex;
     height: 64px;
-    width: 100%;
-    justify-content: center;
 }
 .header__background{
     width: 100%;
@@ -180,10 +177,8 @@ html{
     display: flex;
     align-items: center;
     margin-right: 15px;
-    margin-left: 100px;
 }
 .header__logo{
-    margin-left:  10%;
     width: 30px;
     height: 30px;
     border: 2px solid white;
@@ -398,7 +393,7 @@ html{
     padding-left: 5px;
     color: rgba(0,0,0,0.6);
 }
-/* .header__search__bar__modal{
+.header__search__bar__modal{
     position: fixed;
     top: 64px;
     left: 0;
@@ -408,37 +403,7 @@ html{
     display: none;
     z-index: 30;
     animation: modal-show-up ease 0.3s;
-    visibility: visible;
-} */
-
-.header__search__bar__modal {
-    position: fixed;
-    top: 64px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: none;
-    z-index: 999; /* Đặt z-index cho header__search__bar__modal, giá trị này có thể thấp hơn so với list_cart */
-    animation: modal-show-up ease 0.3s;
 }
-/*list cate*/
-.list_cate {
-    position: relative;
-    border-radius: 8px;
-    background-color: #c32b2b;
-    color: #fff;
-    z-index: 9999; /* Chọn một giá trị z-index lớn hơn giá trị của header__search__bar__modal */
-}
-.list_cate a {
-    display: block;
-    text-decoration: none;
-    color: #fff;
-}
-.list_cate a:hover {
-    background-color: #a30f0f;
-}
-
 /* Navbar list */
 .header__navbar{
     height: 42px;
@@ -506,6 +471,7 @@ html{
 /* Slidebar */
 
 .slide{
+    display: flex;
     margin-top: 15px;
     margin-bottom: 15px;
 }
@@ -611,7 +577,9 @@ html{
 .slidebar__item__link__text__wrapper p{
     font-size: 0.9rem;
 }
+.slidebar__item__link__icon__last__wrapper{
 
+}
 .slidebar__item__link__icon__last__wrapper i{
     font-size: 0.6rem;
     color: rgba(0,0,0,0.9);
@@ -687,6 +655,9 @@ html{
     .slider__top__wrapper{
         display: flex;
         transition: all ease 1s;
+    }
+    .slider__top__wrapper img{
+        
     }
     .slider__top__wrapper a{
         width: 100%;
@@ -771,7 +742,6 @@ html{
     margin-bottom: 15px;
 }
 .web__ads__box{
-    width: 100%;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -780,16 +750,14 @@ html{
     height: 100%;
 }
 /* End Web Ads */
-
 /* Flash Sale */
 .flash__sale{
     border-radius: 8px;
-    /* background: linear-gradient(
+    background: linear-gradient(
         180deg,
         #2d068d,
         #ad12cb
-    );  */
-    background-image: url(../pages/assets/bg/hot-sale-giang-sinh_2.png);
+    ); 
     margin-bottom: 15px;
     position: relative;
 }
@@ -865,7 +833,6 @@ html{
 .flash__sale__row{
     justify-content: space-between;
 }
-/* Trong file CSS */
 /* Countdown */
 .coutdown{
     display: flex;
@@ -897,11 +864,23 @@ html{
     font-size: 1rem;
     font-weight: 700;
 }
+#day{
+
+}
+#hour{
+
+}
+#minutes{
+
+}
+#sec{
+
+}
 /* End countdown */
 .flash__sale__product{
-    width: 260px;
+    width: 228px;
     padding: 10px 10px 0 10px;
-    margin: 0 10px 15px 20px;
+    margin: 0 10px 10px 0;
     background-color: white;
     box-shadow: rgb(60 64 67 / 10%) 0px 1px 2px 0px, 
     rgb(60 64 67 / 15%) 0px 2px 6px 2px;
@@ -1055,10 +1034,9 @@ html{
     color: #444;
 }
 .featured__phone__product__item{
-    width: 260px;
-    padding: 10px 10px 0 10px;
-    margin: 20px 10px 15px 20px;
+    width: 232px;
     height: 393px;
+    padding: 10px;
     box-shadow: rgb(60 64 67 / 10%) 0px 1px 2px 0px, 
     rgb(60 64 67 / 15%) 0px 2px 6px 2px;
     border-radius: 8px;
@@ -1191,9 +1169,9 @@ html{
 .footer{
     padding: 10px 0;
 }
-/* .footer__1st{
+.footer__1st{
 
-} */
+}
 .footer__1st__text__wrapper{
     display: flex;
     flex-direction: column;
@@ -1451,9 +1429,9 @@ html{
     overflow-y: auto;
     border-left: 1px solid rgba(0,0,0,0.1);
 }
-/* .talk__with__supporter__form__body__your__info{
+.talk__with__supporter__form__body__your__info{
    
-} */
+}
 .talk__with__supporter__form__body__your__info__title{
     font-size: 0.9rem;
     font-weight: 700;
@@ -1524,9 +1502,9 @@ html{
     align-items: center;
     justify-content: space-between;
 }
-/* .talk__with__supporter__form__body__message{
+.talk__with__supporter__form__body__message{
 
-} */
+}
 .talk__with__supporter__form__body__message input{
     width: 245px;
     height: 62px;
