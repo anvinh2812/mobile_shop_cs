@@ -5,7 +5,20 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
     header("Location: ../dashboard/login.php");
     exit();
 }
+include '../connect.php'; // Đảm bảo đường dẫn đến file connect.php là chính xác
 $username = $_SESSION['TenDangNhap1'];
+// Thực hiện truy vấn để lấy ID của người dùng dựa trên tên đăng nhập
+$sql = "SELECT mid FROM member WHERE username = '$username'";
+$result = mysqli_query($conn, $sql);
+if (mysqli_num_rows($result) > 0) {
+    // Lấy kết quả và hiển thị ID của người dùng
+    $row = mysqli_fetch_assoc($result);
+    $userID = $row['mid'];
+    echo "ID của người dùng đăng nhập là: " . $userID;
+} else {
+    echo "Không tìm thấy người dùng.";
+}
+mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +30,7 @@ $username = $_SESSION['TenDangNhap1'];
     <link rel="shortcut icon" href="../assets/img/zalo suopprt/cellphones.png">
     <link rel="stylesheet" href="../assets/font/themify-icons-font/themify-icons/themify-icons.css">
     <link rel="stylesheet" href="../assets/font/fontawesome-free-5.15.4/fontawesome-free-5.15.4-web/css/all.css">
-    
+    <link rel="stylesheet" href="../../css/find.css">
     <link rel="stylesheet" href="../../css/toast.css">
     <link rel="stylesheet" href="../../css/home.css">
     
@@ -28,183 +41,182 @@ $username = $_SESSION['TenDangNhap1'];
     <div id="main">
         <!-- Header -->
        <div class="header__height"></div>
-        <div class="header grid wide">
-            <div class="row">
-                <!-- Logo Icon -->
-                <div class="header__logo__wrapper ">
-                    <div class="header__logo">
-                    </div>
-                    <span class="header__logo__line__1st"></span>
-                    <span class="header__logo__line__2nd"></span>
-                    <span class="header__logo__line__3rd"></span>
-                </div>
-                <!-- Logo Image -->
-                <div class="header__logo__img">
-                    <a href="./home.php"><img src="../assets/img/Desktop logo/1.png" alt=""></a>
-                </div>
-                <!-- Search bar -->
-                <div class="header__search__bar">
-                    <div class="header__search__bar__icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <div class="header__search__bar__input">
-                        <input type="text" id="search-box" placeholder="Bạn cần tìm gì?">
-                        <div id="suggestion-box"></div>
-                    </div>
-                </div>
-                <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
-                <script>
-                    $(document).ready(function() {
-                        // Lắng nghe sự kiện khi người dùng gõ vào #search-box
-                        $("#search-box").keyup(function() {
-                            // Thực hiện AJAX để tìm kiếm và hiển thị kết quả trong #suggestion-box
-                            $.ajax({
-                                type: "GET",
-                                url: "../../action/readProduct.php",
-                                data: 'keyword=' + $(this).val(),
-                                beforeSend: function() {
-                                    $("#search-box").css("background", "#FFF url(./assets/icon/loadicon.png) no-repeat 165px");
-                                },
-                                success: function(data) {
-                                    $("#suggestion-box").show();
-                                    $("#suggestion-box").html(data);
-                                    $("#search-box").css("background", "#FFF");
-                                }
-                            });
-                        });
-                        // Lắng nghe sự kiện click trên toàn bộ document
-                        $(document).click(function(event) {
-                            // Kiểm tra xem sự kiện click có xảy ra trên #search-box hay không
-                            if (!$(event.target).closest('#search-box').length) {
-                                // Nếu không phải là #search-box hoặc bất kỳ phần tử con của nó
-                                $("#suggestion-box").hide();
-                            }
-                        });
-
-                        // Hàm để chọn một mục từ #suggestion-box
-                        function selectCountry(val) {
-                            $("#search-box").val(val);
-                            $("#suggestion-box").hide();
-                        }
-                    });
-                </script>
-                <div class="header__search__bar__modal" style="display: none;"></div>
-                <script>
-                    var search__input = document.querySelector('.header__search__bar__input input');
-                    var search__modal = document.querySelector('.header__search__bar__modal');
-                    var list_cate = document.querySelector('.list_cate');
-                    search__input.addEventListener('click', function(event) {
-                        search__modal.style.display = 'block';
-                        event.stopPropagation();
-                    });
-
-                    search__modal.addEventListener('click', function() {
-                        search__modal.style.display = 'none';
-                    });
-                </script>
-                <!-- Navbar list -->
-                <div class="header__navbar">
-                    <ul class="header__navbar__list">
-                        <li class="header__navbar__item">
-                            <div class="header__navbar__item__wrapper">
-                                <a href="cart_detail.php" class="header__navbar__item__link">
-                                    <i class="fas fa-shipping-fast"></i>
-                                    <div class="header__navbar__item__link__desc__wrapper">
-                                        <p>Lịch sử</p>
-                                        <p>đơn hàng</p>
-                                    </div>
-                                </a>
+            <div class="header__background">
+                <div class="header grid wide">
+                    <div class="row">
+                        <!-- Logo Icon -->
+                        <div class="header__logo__wrapper">
+                            <div class="header__logo">
                             </div>
-                        </li>
-                        <li class="header__navbar__item">
-                            <div class="header__navbar__item__wrapper">
-                                <a href="cart.php" class="header__navbar__item__link">
-                                    <i class="ti-bag"></i>
-                                    <div class="header__navbar__item__link__desc__wrapper">
-                                        <p>Giỏ</p>
-                                        <p>hàng</p>
-                                    </div>
-                                </a>
+                            <span class="header__logo__line__1st"></span>
+                            <span class="header__logo__line__2nd"></span>
+                            <span class="header__logo__line__3rd"></span>
+                        </div>
+                        <!-- Logo Image -->
+                        <div class="header__logo__img">
+                            <a href="../../pages/dashboard/home.php"><img src="../assets/logo/logo.png" alt=""></a>
+                        </div>
+                        <!-- Search bar -->
+                        <div class="header__search__bar">
+                            <div class="header__search__bar__icon">
+                                <i class="fas fa-search"></i>
                             </div>
-                        </li>
-                        <li class="header__navbar__item">
-                            <div class="header__navbar__item__wrapper">
-                                <div class="header__navbar__item__link" onclick="toggleDropdown()">
-                                    <div class="header__navbar__item__link__icon__wrapper__last">
-                                        <i class="far fa-user-circle"></i>
-                                    </div>
-                                    <div class="header__navbar__item__link__desc__wrapper_last">
-                                        <p id="username">
-                                            <?php
-                                            if (isset($_SESSION['TenDangNhap1'])) {
-                                                echo $_SESSION['TenDangNhap1']; // Hiển thị tên người dùng từ session
-                                            }
-                                            ?>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="dropdown" id="dropdown-smem">
-                                    <div class="dropdown-content">
-                                        <a href="../member/member.php">Trang cá nhân</a>
-                                        <a href="logout.php">Đăng xuất</a>
-                                    </div>
-                                </div>
+                            <div class="header__search__bar__input">
+                                <input type="text" id="search-box" placeholder="Bạn cần tìm gì?">
+                                <div id="suggestion-box"></div>
                             </div>
-                        </li>
-
-                        <style>
-                            /* Ẩn dropdown content mặc định */
-                            .dropdown-content {
-                            display: none;
-                            position: absolute;
-                            background-color: #fff;
-                            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-                            z-index: 1;
-                            color: #000; /* Màu chữ đen */
-                            font-weight: bold; /* In đậm */
-                        }
-
-                        /* Hiển thị dropdown khi có class 'show' */
-                        .dropdown-content.show {
-                            display: block;
-                        }
-                        .dropdown-content a {
-                            display: block;
-                            width: 100%;
-                            white-space: normal;
-                            text-align: left;
-                            padding: 8px 16px;
-                            text-decoration: none;
-                            color: #000; /* Màu chữ đen */
-                            font-weight: bold; /* In đậm */
-                            transition: background-color 0.3s ease; /* Hiệu ứng hover */
-                        }
-
-                        .dropdown-content a:hover {
-                            background-color: #f0f0f0; /* Màu nền khi di chuột qua */
-                        }
-                        </style>
-
+                        </div>
+                        <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
                         <script>
-                            function toggleDropdown() {
-                                var dropdown = document.querySelector("#dropdown-smem .dropdown-content");
-                                dropdown.classList.toggle("show");
-                            }
-
-                            // Đóng dropdown nếu click ra ngoài dropdown
-                            window.onclick = function(event) {
-                                if (!event.target.closest('.header__navbar__item__wrapper')) {
-                                    var dropdowns = document.querySelectorAll(".dropdown-content");
-                                    dropdowns.forEach(function(dropdown) {
-                                        if (dropdown.classList.contains('show')) {
-                                            dropdown.classList.remove('show');
+                            $(document).ready(function() {
+                                // Lắng nghe sự kiện khi người dùng gõ vào #search-box
+                                $("#search-box").keyup(function() {
+                                    // Thực hiện AJAX để tìm kiếm và hiển thị kết quả trong #suggestion-box
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "../../action/readProduct.php",
+                                        data: 'keyword=' + $(this).val(),
+                                        beforeSend: function() {
+                                            $("#search-box").css("background", "#FFF url(../assets/icon/loadicon.png) no-repeat 165px");
+                                        },
+                                        success: function(data) {
+                                            $("#suggestion-box").show();
+                                            $("#suggestion-box").html(data);
+                                            $("#search-box").css("background", "#FFF");
                                         }
                                     });
+                                });
+                                // Lắng nghe sự kiện click trên toàn bộ document
+                                $(document).click(function(event) {
+                                    // Kiểm tra xem sự kiện click có xảy ra trên #search-box hay không
+                                    if (!$(event.target).closest('#search-box').length) {
+                                        // Nếu không phải là #search-box hoặc bất kỳ phần tử con của nó
+                                        $("#suggestion-box").hide();
+                                    }
+                                });
+                                // Hàm để chọn một mục từ #suggestion-box
+                                function selectCountry(val) {
+                                    $("#search-box").val(val);
+                                    $("#suggestion-box").hide();
                                 }
-                            }
+                            });
                         </script>
+                        <div class="header__search__bar__modal" style="display: none;"></div>
+                        <script>
+                            var search__input = document.querySelector('.header__search__bar__input input');
+                            var search__modal = document.querySelector('.header__search__bar__modal');
+                            var list_cate = document.querySelector('.list_cate');
+                            search__input.addEventListener('click', function(event) {
+                                search__modal.style.display = 'block';
+                                event.stopPropagation();
+                            });
 
-                    </ul>
+                            search__modal.addEventListener('click', function() {
+                                search__modal.style.display = 'none';
+                            });
+                        </script>
+                        <!-- Navbar list -->
+                        <div class="header__navbar">
+                            <ul class="header__navbar__list">
+                                <li class="header__navbar__item">
+                                    <div class="header__navbar__item__wrapper">
+                                        <a href="../detail/cart_detail.php" class="header__navbar__item__link">
+                                            <i class="fas fa-shipping-fast"></i>
+                                            <div class="header__navbar__item__link__desc__wrapper">
+                                                <p>Lịch sử</p>
+                                                <p>đơn hàng</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="header__navbar__item">
+                                    <div class="header__navbar__item__wrapper">
+                                        <a href="cart.php" class="header__navbar__item__link">
+                                            <i class="ti-bag"></i>
+                                            <div class="header__navbar__item__link__desc__wrapper">
+                                                <p>Giỏ</p>
+                                                <p>hàng</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="header__navbar__item">
+                                    <div class="header__navbar__item__wrapper">
+                                        <div class="header__navbar__item__link" onclick="toggleDropdown()">
+                                            <div class="header__navbar__item__link__icon__wrapper__last">
+                                                <i class="far fa-user-circle"></i>
+                                            </div>
+                                            <div class="header__navbar__item__link__desc__wrapper_last">
+                                                <p id="username">
+                                                    <?php
+                                                    if (isset($_SESSION['TenDangNhap1'])) {
+                                                        echo $_SESSION['TenDangNhap1']; // Hiển thị tên người dùng từ session
+                                                    }
+                                                    ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown" id="dropdown-smem">
+                                            <div class="dropdown-content">
+                                                <a href="../member/member.php">Trang cá nhân</a>
+                                                <a href="logout.php">Đăng xuất</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <style>
+                                    /* Ẩn dropdown content mặc định */
+                                    .dropdown-content {
+                                    display: none;
+                                    position: absolute;
+                                    background-color: #fff;
+                                    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                                    z-index: 1;
+                                    color: #000; /* Màu chữ đen */
+                                    font-weight: bold; /* In đậm */
+                                }
+                                /* Hiển thị dropdown khi có class 'show' */
+                                .dropdown-content.show {
+                                    display: block;
+                                }
+                                .dropdown-content a {
+                                    display: block;
+                                    width: 100%;
+                                    white-space: normal;
+                                    text-align: left;
+                                    padding: 8px 16px;
+                                    text-decoration: none;
+                                    color: #000; /* Màu chữ đen */
+                                    font-weight: bold; /* In đậm */
+                                    transition: background-color 0.3s ease; /* Hiệu ứng hover */
+                                }
+
+                                .dropdown-content a:hover {
+                                    background-color: #f0f0f0; /* Màu nền khi di chuột qua */
+                                }
+                                </style>
+
+                                <script>
+                                    function toggleDropdown() {
+                                        var dropdown = document.querySelector("#dropdown-smem .dropdown-content");
+                                        dropdown.classList.toggle("show");
+                                    }
+                                    // Đóng dropdown nếu click ra ngoài dropdown
+                                    window.onclick = function(event) {
+                                        if (!event.target.closest('.header__navbar__item__wrapper')) {
+                                            var dropdowns = document.querySelectorAll(".dropdown-content");
+                                            dropdowns.forEach(function(dropdown) {
+                                                if (dropdown.classList.contains('show')) {
+                                                    dropdown.classList.remove('show');
+                                                }
+                                            });
+                                        }
+                                    }
+                                </script>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -335,6 +347,7 @@ $username = $_SESSION['TenDangNhap1'];
                 </div>
             </div>
         </div>
+        <script src="../../action/slide.js"></script>
         <!-- ADS -->
         <div class="web__ads grid wide">
             <div class="row">
@@ -441,50 +454,60 @@ $username = $_SESSION['TenDangNhap1'];
                 </div>
             <div class="row flash__sale__product__list__wrapper" >
                 <div class="flash__sale__product__list">
-                    <?php
-                    include '../connect.php';
-                    $result = $conn->query($sql);
-                    $row = $result->fetch_assoc();
-                    $sql = "SELECT p.*, s.*, se.discount_percentage 
-                            FROM product p
-                            INNER JOIN sale s ON p.pid = s.pid
-                            INNER JOIN season se ON s.seasonid = se.seasonid
-                            WHERE s.seasonid = '1'";
-                    $result = $conn->query($sql);
+                <?php
+                include '../connect.php';
 
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo '<a href="../detail/product_detail.php?pname=' . $row["pname"] . '">';
-                            echo '<div class="flash__sale__product">';
-                            echo '<div class="flash__sale__discount">';
-                            echo '<p>' . $row["discount_percentage"] . '%' . '</p>';
-                            echo '</div>';
-                            echo '<div class="flash__sale__product__img__wrapper">';
-                            echo '<img src="../assets/images/' . $row["pimage"] . '" alt="điện thoại ' . $row["pname"] . '">';
-                            echo '</div>';
-                            echo '<div class="flash__sale__product__desc">';
-                            echo '<p class="flash__sale__product__desc__title">' . $row["pname"] . '</p>';
-                            echo '<div class="flash__sale__product__desc__price">';
-                            echo '<div class="flash__sale__product__desc__price__new">';
-                            echo '<p>' . $row["pnewprice"] . ' <span class="flash__sale__product__desc__price__unit__new">đ</span></p>';
-                            echo '</div>';
-                            echo '<div class="flash__sale__product__desc__price__old">';
-                            echo '<p>' . $row["poldprice"] . ' <span class="flash__sale__product__desc__price__unit__old">đ</span></p>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '</a>'; // Đóng thẻ a
-                        }
-                    } else {
-                        echo "Không có sản phẩm.";
+                // Truy vấn để lấy thông tin sản phẩm và phần trăm giảm giá từ bảng season
+                $sql = "SELECT p.*, s.*, se.discount_percentage 
+                        FROM product p
+                        INNER JOIN sale s ON p.pid = s.pid
+                        INNER JOIN season se ON s.seasonid = se.seasonid
+                        WHERE s.seasonid = '1'";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        // Lấy giá cũ và phần trăm giảm giá từ kết quả truy vấn
+                        $oldPrice = $row["pprice"];
+                        $discountPercentage = $row["discount_percentage"];
+
+                        // Tính toán giá mới (pnewprice)
+                        $newPrice = $oldPrice * (1 - ($discountPercentage / 100));
+
+                        // Hiển thị thông tin sản phẩm với giá mới tính được
+                        echo '<a href="../detail/product_detail.php?pname=' . $row["pname"] . '">';
+                        echo '<div class="flash__sale__product">';
+                        echo '<div class="flash__sale__discount">';
+                        echo '<p>' . $discountPercentage . '%' . '</p>';
+                        echo '</div>';
+                        echo '<div class="flash__sale__product__img__wrapper">';
+                        echo '<img src="../assets/images1/' . $row["pimage"] . '" alt="điện thoại ' . $row["pname"] . '">';
+                        echo '</div>';
+                        echo '<div class="flash__sale__product__desc">';
+                        echo '<p class="flash__sale__product__desc__title">' . $row["pname"] . '</p>';
+                        echo '<div class="flash__sale__product__desc__price">';
+                        echo '<div class="flash__sale__product__desc__price__new">';
+                        echo '<p>' . $newPrice . ' <span class="flash__sale__product__desc__price__unit__new">đ</span></p>';
+                        echo '</div>';
+                        echo '<div class="flash__sale__product__desc__price__old">';
+                        echo '<p>' . $oldPrice . ' <span class="flash__sale__product__desc__price__unit__old">đ</span></p>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</a>'; // Đóng thẻ a
                     }
-                    $conn->close();
-                    ?>
+                } else {
+                    echo "Không có sản phẩm.";
+                }
+                $conn->close();
+                ?>
+
                 </div>
             </div>
         </div>
         <script src="../../action/flash_sale_slide.js"></script>
+
         <!-- hot__phone -->
         <div class="featured__phone grid wide">
             <div class="row featured__phone__gutter">
@@ -517,7 +540,7 @@ $username = $_SESSION['TenDangNhap1'];
                 <!-- Product List -->
                 <?php
                 include '../connect.php';
-                $productsPerPage = 4; // Số lượng sản phẩm trên mỗi trang
+                $productsPerPage = 5; // Số lượng sản phẩm trên mỗi trang
                 $category_id = isset($_GET['category']) ? $_GET['category'] : 1; // 1 là ID của danh mục mặc định
                 $page = isset($_GET['page']) && $_GET['page'] > 0 ? $_GET['page'] : 1;
                 // Tính tổng số sản phẩm theo từng danh mục
@@ -546,7 +569,7 @@ $username = $_SESSION['TenDangNhap1'];
                         echo '<div class="featured__phone__product__item">';
                         // Hiển thị thông tin sản phẩm
                         echo '<div class="featured__phone__product__img__wrapper">';
-                        echo '<img src="../assets/images/' . $row["pimage"] . '" alt="điện thoại ' . $row["pname"] . '">';
+                        echo '<img src="../assets/images1/' . $row["pimage"] . '" alt="điện thoại ' . $row["pname"] . '">';
                         echo '</div>';
                         echo '<div class="featured__phone__product__desc">';
                         echo '<div class="featured__phone__product__desc__title">';
@@ -557,7 +580,7 @@ $username = $_SESSION['TenDangNhap1'];
                         echo '<div class="featured__phone__product__desc__price">';
                         echo '<div class="featured__phone__product__desc__price__new">';
                         echo '<p>';
-                        echo number_format($row['pnewprice'], 0, '', '.');
+                        echo number_format($row['pprice'], 0, '', '.');
                         echo '<span class="featured__phone__product__desc__price__unit__new">đ</span>';
                         echo '</p>';
                         echo '</div>';
@@ -572,10 +595,8 @@ $username = $_SESSION['TenDangNhap1'];
                 } else {
                     echo "Không có sản phẩm.";
                 }
-
                 $conn->close();
                 ?>
-
             </div>
             <?php
             echo '<div class="pagination">';
@@ -608,7 +629,6 @@ $username = $_SESSION['TenDangNhap1'];
                 }
             </style>
         </div>
-
     </div>
     <div class="footer__information__background">
         <div class="footer__information">
@@ -694,5 +714,4 @@ $username = $_SESSION['TenDangNhap1'];
         </div>
     </div>
 </body>
-<script src="../../action/slide_ads.js"></script>
 </html>

@@ -4,7 +4,7 @@ $keyword = $_REQUEST["keyword"];
 $sql = "SELECT * FROM product WHERE pname LIKE '%" . $keyword . "%'";
 $result = $conn->query($sql) or die($conn->error);
 ?>
-<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="../../css/style.css">
 <div class="list_cate">
 	<?php
 	while ($row = $result->fetch_assoc()) {

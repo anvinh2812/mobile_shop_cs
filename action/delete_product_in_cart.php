@@ -1,30 +1,26 @@
 <?php
 session_start();
-include 'connect.php';
+include('connect.php');
 
-if (isset($_GET['pname'])) {
-    $name = $_GET['pname'];
-    
-    // Escape the product name to prevent SQL injection
-    $escapedName = mysqli_real_escape_string($conn, $name);
-    
-    // Perform the deletion query based on the product name (pname)
-    $deleteQuery = "DELETE FROM cart WHERE pname = '$escapedName'";
-    $deleteResult = mysqli_query($conn, $deleteQuery);
-    
+if (isset($_GET['code'])) {
+    $productCode = $_GET['code'];
+    $escapedProductCode = $conn->real_escape_string($productCode);
+
+    $deleteQuery = "DELETE FROM cart WHERE code = '$escapedProductCode'";
+    $deleteResult = $conn->query($deleteQuery);
+
     if ($deleteResult) {
-        // Redirect back to the cart page after successful deletion
+        echo "<script>alert('Sản phẩm đã được xóa khỏi giỏ hàng.');</script>";
         header("Location: ../pages/dashboard/cart.php");
         exit();
     } else {
-        // Handle deletion failure
-        echo "Failed to delete the product. Please try again.";
+        echo "<script>alert('Không thể xóa sản phẩm khỏi giỏ hàng. Vui lòng thử lại sau.'); window.history.back();</script>";
+        header("Location: ../pages/dashboard/cart.php");
+        exit();
     }
 } else {
-    // Handle missing product name
-    echo "Product name not provided. Cannot delete the product.";
+    echo "Mã sản phẩm không được cung cấp";
 }
 
-// Close the database connection
-mysqli_close($conn);
+$conn->close();
 ?>
