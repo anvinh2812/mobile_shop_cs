@@ -376,7 +376,7 @@ if (mysqli_num_rows($result) > 0) {
                     $row = $pidResult->fetch_assoc();
                     $pid = $row['pid'];
                     // Tiếp tục thực hiện truy vấn để lấy dữ liệu từ bảng comment với pid đã có
-                    $commentQuery = "SELECT * FROM comment WHERE pid = $pid";
+                    $commentQuery = "SELECT * FROM comment WHERE pid = $pid AND comstatus = 1";                    
                     $commentResult = $conn->query($commentQuery);
 
                     if ($commentResult->num_rows > 0) {
@@ -390,19 +390,23 @@ if (mysqli_num_rows($result) > 0) {
                             if ($memberResult->num_rows > 0) {
                                 $member = $memberResult->fetch_assoc();
                                 $mname = $member['mname'];
-
-                                echo '<div class="comment">
-                                            <i class="fa fa-user-circle"></i>
-                                            <h4>' . $mname . '<span>';
-                                echo '</span></h4>
-                                            <p>' . $comment['content'] . '</p>
-                                            <span class="time">' . $comment['comdate'] . '</span>
-                                        </div>';
+            
+                                echo '<div class="comment">';
+                                echo '<i class="fa fa-user-circle"></i>';
+                                echo '<h4>' . $mname . '<span></span></h4>';
+                                echo '<p>' . $comment['content'] . '</p>';
+                                echo '<span class="time">' . $comment['comdate'] . '</span>';
+            
+                                // Kiểm tra xem comment thuộc về người dùng đăng nhập hay không để hiển thị nút xóa
+                                if ($mid === $userID) {
+                                    echo '<a href="../../action/delete_comment_action.php?comid=' . $comment['comid'] . '&mid=' . $userID .  '&pname=' . $receivedPname . '">Xóa comment</a>';
+                                }
+            
+                                echo '</div>';
                             } else {
                                 echo "Không tìm thấy thông tin thành viên.";
                             }
                         }
-                        echo '</div>';
                     } else {
                         echo "Chưa có bình luận nào cho sản phẩm này.";
                     }
@@ -410,7 +414,7 @@ if (mysqli_num_rows($result) > 0) {
                     echo "Không tìm thấy sản phẩm.";
                 }
             }
-        ?>
+            ?>
 
     </div>
 </div>
