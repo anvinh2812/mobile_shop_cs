@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="../../css/find.css">
     <link rel="stylesheet" href="../../css/home.css">
     <link rel="stylesheet" href="../../css/cart.css">
-    <link rel="stylesheet" href="../../css/orders.css">
+    <link rel="stylesheet" href="../../css/orders1.css">
     <title>Document</title>
 </head>
 <body>
@@ -234,12 +234,11 @@
     <h2>Các đơn hàng đã đặt</h2>
     <?php
         include '../connect.php';
-
-        $sql = "SELECT orders.oid, orders.odate, orders.ototal, orders.ostatus, product.pname, product.pimage
+        $sql = "SELECT orders.quantity ,orders.oid, orders.odate, orders.ototal, orders.ostatus, product.pname, product.pimage
         FROM orders
         JOIN product ON orders.pid = product.pid
         WHERE orders.mid = $userID
-        AND (orders.ostatus = 'chờ xác nhận' OR orders.ostatus = 'đã xác nhận')";
+        AND (orders.ostatus = 'chờ xác nhận')";
 
         $result = mysqli_query($conn, $sql);
 
@@ -252,6 +251,7 @@
                 $ostatus = $row["ostatus"];
                 $productName = $row["pname"];
                 $productImage = $row["pimage"];
+                $quantity = $row['quantity'];
                 // Display product details
                 
             ?>
@@ -260,7 +260,8 @@
                     <div class='real_order_info'>
                         <div class='real_order_name'>ID Đơn hàng: <?php echo $oid; ?></div>
                         <div class='real_order_date'>Ngày đặt hàng: <?php echo $odate; ?></div>
-                        <div class ='real_order_product_name'>Tên sản phẩm: <?php echo $productName; ?></div>
+                        <div class='real_order_product_name'>Tên sản phẩm: <?php echo $productName; ?></div>
+                        <div class='real_order_product_quantity'>Số lượng: <?php echo $quantity; ?></div>
                         <div class='real_order_total_money'>Tổng tiền: <?php echo number_format($ototal, 0, ',', '.') ?> đ</div>
                         <div class='real_order_status'>Trạng thái: <span class="status" data-status="<?php echo $ostatus; ?>"><?php echo $ostatus; ?></span></div>
                         <div class='real_order_button'>
@@ -270,7 +271,6 @@
                 </div>
                 
                 <?php
-                echo $ostatus;
                 // Sum up total amount for all orders
                 $total += $ototal;
             }
@@ -300,12 +300,61 @@
         </script>
         
     </div>  
+
+    <div class="confirmed_orders">
+        <h2>Các đơn hàng đã xác nhận</h2>
+        <?php
+        include '../connect.php';
+
+        $confirmedOrdersQuery = "SELECT  orders.quantity ,orders.oid, orders.odate, orders.ototal, orders.ostatus, product.pname, product.pimage
+                        FROM orders
+                        JOIN product ON orders.pid = product.pid
+                        WHERE orders.ostatus = 'đã xác nhận' 
+                        AND orders.mid = $userID";
+
+
+        $confirmedOrdersResult = mysqli_query($conn, $confirmedOrdersQuery);
+
+        if ($confirmedOrdersResult && mysqli_num_rows($confirmedOrdersResult) > 0) {
+            while ($row = mysqli_fetch_assoc($confirmedOrdersResult)) {
+                $oid = $row["oid"];
+                $odate = $row["odate"];
+                $ototal = $row["ototal"];
+                $ostatus = $row["ostatus"];
+                $productName = $row["pname"];
+                $productImage = $row["pimage"];
+                $quantity = $row['quantity'];
+                // Display confirmed order details
+                ?>
+                <div class='confirmed_order'>
+                    <img src='../assets/images1/<?php echo $productImage; ?>' alt='Product: <?php echo $productName; ?>'>
+                    <div class='confirmed_order_info'>
+                        <div class='confirmed_order_name'>ID Đơn hàng: <?php echo $oid; ?></div>
+                        <div class='confirmed_order_date'>Ngày đặt hàng: <?php echo $odate; ?></div>
+                        <div class='confirmed_order_product_name'>Tên sản phẩm: <?php echo $productName; ?></div>
+                        <div class='confirmed_order_product_quantity'>Số lượng: <?php echo $quantity; ?></div>
+                        <div class='confirmed_order_total_money'>Tổng tiền: <?php echo number_format($ototal, 0, ',', '.') ?> đ</div>
+                        <div class='confirmed_order_status'>Trạng thái: <?php echo $ostatus; ?></div>
+                    </div>
+                </div>
+        <?php
+            }
+        } else {
+            // Display a message if there are no confirmed orders
+            echo "Không có đơn hàng đã xác nhận";
+        }
+
+        mysqli_close($conn);
+        ?>
+    </div>
+
+
     <div class="cancel_orders">
     <h2>Các đơn hàng đã hủy</h2>
         <?php
         include '../connect.php';
 
-        $canceledOrdersQuery = "SELECT orders.oid, orders.odate, orders.ototal, orders.ostatus, product.pname, product.pimage
+        $canceledOrdersQuery = "SELECT  orders.quantity ,orders.oid, orders.odate, orders.ototal, orders.ostatus, product.pname, product.pimage
                                 FROM orders
                                 JOIN product ON orders.pid = product.pid
                                 WHERE orders.mid = $userID
@@ -321,7 +370,7 @@
                 $ostatus = $row["ostatus"];
                 $productName = $row["pname"];
                 $productImage = $row["pimage"];
-
+                $quantity = $row['quantity'];
                 // Display canceled order details
                 ?>
                 <div class='cancel_order'>
@@ -330,6 +379,8 @@
                         <div class='cancel_order_name'>ID Đơn hàng: <?php echo $oid; ?></div>
                         <div class='cancel_order_date'>Ngày đặt hàng: <?php echo $odate; ?></div>
                             <div class='cancel_order_product_name'>Tên sản phẩm: <?php echo $productName; ?></div>
+                            <div class='cancel_order_product_quantity'>Số lượng: <?php echo $quantity; ?></div>
+                            <div class='cancel_order_total_money'>Tổng tiền: <?php echo number_format($ototal, 0, ',', '.') ?> đ</div>
                             <div class='cancel_order_status'>Trạng thái: <?php echo $ostatus; ?></div>
                     </div>
                 </div>
