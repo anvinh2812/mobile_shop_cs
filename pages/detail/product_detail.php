@@ -39,7 +39,7 @@ if (mysqli_num_rows($result) > 0) {
     <link rel="stylesheet" href="../../css/dropbox.css">
     <link rel="stylesheet" href="../../css/find.css">
     <link rel="stylesheet" href="../../action/dropbox.js">
-    <title>Product Details - <?php echo $row['pname']; ?></title>
+    <title>Nhóm 13 - Chi tiết sản phẩm</title>
 </head>
 
 <body>

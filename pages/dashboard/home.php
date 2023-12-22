@@ -34,7 +34,7 @@ mysqli_close($conn);
     <link rel="stylesheet" href="../../css/find.css">
     <link rel="stylesheet" href="../../css/toast.css">
     <link rel="stylesheet" href="../../css/home.css">   
-    <title>Nhom 13</title>
+    <title>Nhóm 13 - Home</title>
 </head>
 
 <body>
@@ -618,7 +618,7 @@ mysqli_close($conn);
                 .pagination {
                     display: flex;
                     justify-content: center;
-                    background-color: bisque;
+                    background-color: #c40016;
                 }
 
                 .pagination a {
@@ -633,13 +633,12 @@ mysqli_close($conn);
                 }
 
                 .pagination a:hover {
-                    background-color: gray;
-                    /* Màu nền khi di chuột qua */
+                    background-color: #c40016;
                 }
             </style>
         </div>
     </div>
-    <div class="footer__information__background">
+    <div class="footer__information__background grid wide">
         <div class="footer__information">
             <div class="row footer__information__row">
                 <!-- 1st -->

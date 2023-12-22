@@ -33,7 +33,7 @@ mysqli_close($conn);
     <link rel="stylesheet" href="../../css/find.css">
     <link rel="stylesheet" href="../../css/toast.css">
     <link rel="stylesheet" href="../../css/home.css">   
-    <title>Nhom 13</title>
+    <title>Nhom 13 - Categories</title>
 </head>
 
 <body>

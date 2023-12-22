@@ -142,17 +142,18 @@ div table tr td{
 
 
 button {
-    background-color: blue;
-    color: rgb(252, 89, 89);
+    background-color: rgb(240, 75, 75);
+    color: #fff;
     font-size: 16px;
     font-weight: bold;
     padding: 10px;
     border: none;
     cursor: pointer;
     margin-top: 10px;
+    border-radius: 10px;
 }
 button:hover {
-    background-color: #74e38c;
+    background-color: #ff2e2e;
 }
 .order-details {
     background-color: #551b1b;

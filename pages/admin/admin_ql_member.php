@@ -147,7 +147,7 @@ switch ($action) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="admin_ql_member3.css">
+    <link rel="stylesheet" href="admin_ql_member.css">
     <title>Khách hàng</title>
     <link rel="stylesheet" href="admin_side_bar.css">
 </head>
@@ -155,16 +155,17 @@ switch ($action) {
 <body>
     <div>
     <nav class="nav1">
-        <a href="admin.php"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
-        <a href="doanhthu.php"><i class="fa fa-line-chart" aria-hidden="true"></i>Doanh thu</a>
-        <a href="khachhang.php"><i class="fa fa-user" aria-hidden="true"></i>Khách hàng</a>
-        <a href="sanpham.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Sản phẩm</a>
-        <a href="admin_ql_order.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Đơn đặt</a>
-        <a href="../../pages/dashboard/logout.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Đăng xuất</a>
+            <!-- <a href="admin.php"><i class="fa fa-home" aria-hidden="true"></i>Home</a> -->
+            <a href="admin_ql_member.php"><i class="fa fa-user" aria-hidden="true"></i>Khách hàng</a>
+            <a href="admin_ql_sanpham.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Sản phẩm</a>
+            <a href="admin_ql_order.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Đơn đặt</a>
+            <a href="admin_ql_doanhthu.php"><i class="fa fa-line-chart" aria-hidden="true"></i>Doanh thu</a>
+            <a href="admin_ql_thongke.php"><i class="fa-solid fa-chart-simple"></i>Thống Kê</a>
+            <a href="../../pages/dashboard/logout.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Đăng xuất</a>
     </nav>
     </div>
     <div class="content">
-        <h1 align="center">User List</h1>
+        <h1 align="center">Thành Viên</h1>
         <center>
         <button style="margin-bottom: 10px;" onclick="toggleForm()">Thêm mới</button>
         </center>
@@ -311,7 +312,7 @@ switch ($action) {
             </div>
             <input type="submit" value="Add Member">
         </form>
-        <div class="form-row"><button style="align-items:center;" onclick="cancelAdd('addMemberForm')">Đóng form</button></div>
+        <div class="close_button"><button style="align-items:center;" onclick="cancelAdd('addMemberForm')">Đóng form</button></div>
     </div>
     <div id="editMember" style="display: none;">    
     <?php
@@ -394,7 +395,7 @@ switch ($action) {
             <input type="submit" value="Save Edit">
             
         </form>
-        <div class="form-row" style="justify-content: center;"><button style="align-items:center;" onclick="cancelEditAdd('editMember')">Đóng form</button></div>
+        <div class="close_button" style="justify-content: center;"><button style="align-items:center;" onclick="cancelEditAdd('editMember')">Đóng form</button></div>
     </div>
 
     <script>
@@ -443,6 +444,7 @@ switch ($action) {
         }
 
     </script>
+    
 </body>
 
 </html>

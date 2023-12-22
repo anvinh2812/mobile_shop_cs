@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="../../css/find.css">
     <link rel="stylesheet" href="../../css/cart.css">
     <link rel="stylesheet" href="../../css/home.css">
-    <title>member</title>
+    <title>Nhom 13 - Cart</title>
 </head>
 <body>
 <div class="header__height"></div>
@@ -246,6 +246,7 @@
                 $code = $row["code"];
 
                 // Hiển thị sản phẩm
+                echo "<a href=\"../detail/product_detail.php?pname={$row['pname']}\">";
                 echo "<div class='product'>";
                 echo "<img src='../assets/images1/$image' alt='điện thoại $name'>";
                 echo "<div class='product_info'>";
@@ -259,6 +260,7 @@
                 echo "</div>";
                 echo "</div>"; // Kết thúc div 'product-info'
                 echo "</div>"; // Kết thúc div 'product'
+                echo "</a>";
 
                 // Cộng dồn giá tiền vào biến tổng tiền
                 $total += $price;

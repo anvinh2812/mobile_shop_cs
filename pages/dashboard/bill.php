@@ -53,6 +53,7 @@ mysqli_close($conn);
     <link rel="stylesheet" href="../../css/find.css">
     <link rel="stylesheet" href="../../css/home.css">
     <link rel="stylesheet" href="../../css/bill.css">
+    <title>Nhóm 13 - Bill</title>
 </head>
 <body>
 <div class="header__height"></div>

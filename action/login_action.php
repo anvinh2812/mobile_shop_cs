@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["login"] = true;
         $_SESSION["TenDangNhap1"] = $username; // Lưu tên đăng nhập, có thể sửa đổi theo cột thích hợp
 
-        header("Location: ../pages/admin/admin.php");
+        header("Location: ../pages/admin/admin_ql_member.php");
         exit();
     }
     // Kiểm tra thông tin đăng nhập có khớp với bảng member

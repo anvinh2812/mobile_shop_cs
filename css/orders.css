@@ -48,7 +48,7 @@ h2{
 .real_order_button{
     width: 300px;
 }
-.real_order_button a{
+.real_order_button .button_huy{
     display: block;
     background-color: #d70018;
     border-radius: 10px;
@@ -203,7 +203,4 @@ h2{
     text-align: right;
     color: #d70018;
     
-}
-.confirm_button{
-    background-color: #44ff2b;
 }

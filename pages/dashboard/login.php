@@ -22,7 +22,7 @@ if(isset($_SESSION['error_message'])) {
     <link rel="stylesheet" href="../assets/font/fontawesome-free-5.15.4/fontawesome-free-5.15.4-web/css/all.css">
     <link rel="stylesheet" href="../../css/login.css">
 
-    <title>Nhóm 13 Login</title>
+    <title>Nhóm 13 Login - Signup</title>
 </head>
 
 <body>

@@ -36,7 +36,7 @@ mysqli_close($conn);
     <link rel="stylesheet" href="../../css/find.css">
     <link rel="stylesheet" href="../../css/home.css">
     <link rel="stylesheet" href="../../css/member.css">
-    <title>Trang thành viên</title>
+    <title>Nhóm 13 - Member</title>
 </head>
 <body>
 <div class="header__height"></div>
