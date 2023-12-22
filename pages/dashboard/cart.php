@@ -34,8 +34,9 @@
     <link rel="shortcut icon" href="../assets/img/zalo suopprt/cellphones.png">
     <link rel="stylesheet" href="../assets/font/themify-icons-font/themify-icons/themify-icons.css">
     <link rel="stylesheet" href="../assets/font/fontawesome-free-5.15.4/fontawesome-free-5.15.4-web/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../../css/find.css">
-    <link rel="stylesheet" href="../../css/cart1.css">
+    <link rel="stylesheet" href="../../css/cart.css">
     <link rel="stylesheet" href="../../css/home.css">
     <title>member</title>
 </head>
@@ -120,7 +121,7 @@
                             <ul class="header__navbar__list">
                                 <li class="header__navbar__item">
                                     <div class="header__navbar__item__wrapper">
-                                        <a href="../detail/cart_detail.php" class="header__navbar__item__link">
+                                        <a href="history.php" class="header__navbar__item__link">
                                             <i class="fas fa-shipping-fast"></i>
                                             <div class="header__navbar__item__link__desc__wrapper">
                                                 <p>Lịch sử</p>
@@ -158,27 +159,34 @@
                                         </div>
                                         <div class="dropdown" id="dropdown-smem">
                                             <div class="dropdown-content">
-                                                <a href="../member/member.php">Trang cá nhân</a>
-                                                <a href="logout.php">Đăng xuất</a>
+                                                <a href="../member/member.php"><i class="fa-regular fa-user"></i>Trang cá nhân</a>
+                                                <a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
 
                                 <style>
-                                    /* Ẩn dropdown content mặc định */
                                     .dropdown-content {
                                     display: none;
                                     position: absolute;
                                     background-color: #fff;
-                                    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                                    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.5);
+                                    width: 100px;
+                                    border-radius: 10px;
                                     z-index: 1;
                                     color: #000; /* Màu chữ đen */
                                     font-weight: bold; /* In đậm */
                                 }
+                                .dropdown-content i{
+                                    font-weight: bold;
+                                    margin: 0 3px 0 5px;
+                                }
                                 /* Hiển thị dropdown khi có class 'show' */
                                 .dropdown-content.show {
                                     display: block;
+                                    border-radius: 10px;
+                                    width: 180px;
                                 }
                                 .dropdown-content a {
                                     display: block;
@@ -190,10 +198,12 @@
                                     color: #000; /* Màu chữ đen */
                                     font-weight: bold; /* In đậm */
                                     transition: background-color 0.3s ease; /* Hiệu ứng hover */
+                                    border-radius: 10px;
                                 }
 
                                 .dropdown-content a:hover {
-                                    background-color: #f0f0f0; /* Màu nền khi di chuột qua */
+                                    background-color: #ff7e7e; 
+                                    cursor: pointer;
                                 }
                                 </style>
 
@@ -240,7 +250,7 @@
                 echo "<img src='../assets/images1/$image' alt='điện thoại $name'>";
                 echo "<div class='product_info'>";
                 echo "<div class='product_name'>$name</div>";
-                echo "<div class='product_price'>Giá: $price đ</div>";
+                echo "<div class='product_price'>Giá: " . number_format($price, 0, ',', '.') . " đ</div>";
                 // Thêm nút xóa sản phẩm
                 echo "<div class='product_button'>";
                 echo "<a class='purchase_button' href='../../pages/dashboard/bill.php?pname=$name&pprice=$price&pimage=$image&code=$code'>Thanh Toán</a>";
@@ -254,7 +264,7 @@
                 $total += $price;
             }
             // Hiển thị tổng tiền và nút thanh toán
-            echo "<div class='total'><p>Tạm tính: $total đ</p></div>";
+            echo "<div class='total'><p>Tạm tính:" . number_format($total, 0, ',', '.') . " đ</p></div>";
         } else {
             // Hiển thị thông báo nếu không có sản phẩm
             echo "Không có sản phẩm nào trong giỏ hàng";
@@ -262,9 +272,6 @@
 
         mysqli_close($conn);
         ?>
-
-
-
     </div>
 </body>
 </html>

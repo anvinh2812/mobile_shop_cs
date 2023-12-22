@@ -462,6 +462,9 @@ html{
 .header__navbar__item__link__icon__wrapper__last{
     display: flex;
     justify-content: center;
+    border-radius: 50px;
+    width: 27px;
+    height: 27px;
 }
 .header__navbar__item__wrapper__last a i{
     margin: 0;

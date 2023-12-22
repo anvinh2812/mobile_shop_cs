@@ -1,50 +1,34 @@
 <?php
-session_start();
-include '../connect.php';
+    session_start();
+    include '../connect.php'; // Đảm bảo đường dẫn đến file connect.php là chính xác
 
-if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
-    $_SESSION["error_message"] = "Thông tin đăng nhập bị sai. Vui lòng kiểm tra lại!";
-    header("Location: ../dashboard/login.php");
-    exit();
-}
+    if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
+        $_SESSION["error_message"] = "Thông tin đăng nhập bị sai. Vui lòng kiểm tra lại!";
+        header("Location: ../dashboard/login.php");
+        exit();
+    }
 
-// Lấy thông tin người dùng từ cơ sở dữ liệu dựa trên mid đã đăng nhập
-$username = $_SESSION['TenDangNhap1'];
-$sqlUserInfo = "SELECT * FROM member WHERE username = '$username'";
-$resultUserInfo = mysqli_query($conn, $sqlUserInfo);
-
-if (mysqli_num_rows($resultUserInfo) > 0) {
-    $rowUserInfo = mysqli_fetch_assoc($resultUserInfo);
-    // Lấy thông tin người dùng
-    $mid = $rowUserInfo['mid'];
-    $mname = $rowUserInfo['mname'];
-    $mphone = $rowUserInfo['mphone'];
-    $madd = $rowUserInfo['madd'];
-    $memail = $rowUserInfo['memail'];
-    // Bạn có thể lấy các thông tin khác tương tự và sử dụng chúng ở bước sau
-}
-if (isset($_GET['pname'])) {
-    $productName = $_GET['pname'];
-
-    // Fetch the pid based on the provided pname
-    $sql = "SELECT pid FROM product WHERE pname = '$productName'";
+    $username = $_SESSION['TenDangNhap1'];
+    // Thực hiện truy vấn để lấy ID của người dùng dựa trên tên đăng nhập
+    $sql = "SELECT mid FROM member WHERE username = '$username'";
     $result = mysqli_query($conn, $sql);
 
-    if ($result && mysqli_num_rows($result) > 0) {
+    if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
-        $pid = $row['pid']; // Get the pid corresponding to the pname
+        $userID = $row['mid'];
+        // Truy vấn để lấy các sản phẩm từ giỏ hàng tương ứng với mid
+        $cartQuery = "SELECT * FROM cart WHERE mid = '$userID'";
+        echo "ID của người dùng đăng nhập là: " . $userID;
+        $result_products = mysqli_query($conn, $cartQuery);
+    } else {
+        echo "Không tìm thấy người dùng.";
     }
-}
-// Lấy thông tin sản phẩm từ URL của cart.php
-$productName = $_GET['pname']; // Tên sản phẩm
-// Lấy các thông tin sản phẩm khác nếu cần thiết
-
-mysqli_close($conn);
+    mysqli_close($conn);
 ?>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../assets/img/zalo suopprt/cellphones.png">
     <link rel="stylesheet" href="../assets/font/themify-icons-font/themify-icons/themify-icons.css">
@@ -52,7 +36,9 @@ mysqli_close($conn);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../../css/find.css">
     <link rel="stylesheet" href="../../css/home.css">
-    <link rel="stylesheet" href="../../css/bill.css">
+    <link rel="stylesheet" href="../../css/cart.css">
+    <link rel="stylesheet" href="../../css/orders.css">
+    <title>Document</title>
 </head>
 <body>
 <div class="header__height"></div>
@@ -244,192 +230,119 @@ mysqli_close($conn);
                 </div>
             </div>
         </div>
-  <div class="container">
-    <h1>THÔNG TIN THANH TOÁN</h1>
+    <div class="real_orders">
+    <h2>Các đơn hàng đã đặt</h2>
     <?php
-    if (isset($_GET['pname']) && isset($_GET['pprice']) && isset($_GET['pimage'])) {
-        echo '<div class="item">';
-        echo "<img src='../assets/images1/" . $_GET['pimage'] . "' alt='điện thoại " . $_GET['pname'] . "'>";
-        echo '<div class="item-info">';
-        echo '<div class="item-name">' . $_GET['pname'] . '</div>';
-        echo '<div class="item-price">' . number_format($_GET['pprice'], 0, ',', '.') . ' đ</div>';
-        echo '<div class="item-quantity">';
-        echo 'Số lượng: <input type="number" id="quantity" name="quantity" value="1" min="1" onchange="updateQuantity()">';
-        echo '<button onclick="decrement()">-</button>';
-        echo '<button onclick="increment()">+</button>';
-        
-        echo '</div>';
-        echo '</div>'; // Kết thúc div 'item-info'
-        echo '</div>'; // Kết thúc div 'item'
-    } else {
-        echo '<p>Không có thông tin sản phẩm.</p>';
-    }
-    ?>
+        include '../connect.php';
 
-    <form action="../../action/payment_action.php" method="POST">
-    <input type="hidden" id="oid" name="oid" value="<?php echo $oid; ?>">
-    <input type="hidden" id="pid" name="pid" value="<?php echo $pid; ?>">
-    <input type="hidden" name="mid" id="mid" value="<?php echo $mid; ?>">
-    <input type="hidden" id="finalQuantity" name="finalQuantity" value="">
-    <input type="hidden" id="sellPrice" name="sellPrice" value="<?php echo isset($_GET['pprice']) ? $_GET['pprice'] : 0; ?>">
-    <p style="display: none;" id="displaySellPrice"><?php echo isset($_GET['pprice']) ? $_GET['pprice'] : 0; ?></p>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var quantityField = document.getElementById("finalQuantity");
-            quantityField.value = "1";
+        $sql = "SELECT orders.oid, orders.odate, orders.ototal, orders.ostatus, product.pname, product.pimage
+        FROM orders
+        JOIN product ON orders.pid = product.pid
+        WHERE orders.mid = $userID
+        AND (orders.ostatus = 'chờ xác nhận' OR orders.ostatus = 'đã xác nhận')";
 
-            calculateTotal();
-        });
+        $result = mysqli_query($conn, $sql);
 
-        function increment() {
-            var quantityField = document.getElementById("quantity");
-            quantityField.value = parseInt(quantityField.value) + 1; // Increment value
-            updateQuantity(); // Update the hidden input with the new quantity value
-            calculateTotal();
-        }
-
-        function decrement() {  
-            var quantityField = document.getElementById("quantity");
-            if (quantityField.value > 1) {
-                quantityField.value = parseInt(quantityField.value) - 1; // Decrement value if greater than 1
-                updateQuantity(); // Update the hidden input with the new quantity value
-                calculateTotal();
+        if ($result && mysqli_num_rows($result) > 0) {
+            $total = 0;
+            while ($row = mysqli_fetch_assoc($result)) {
+                $oid = $row["oid"];
+                $odate = $row["odate"];
+                $ototal = $row["ototal"];
+                $ostatus = $row["ostatus"];
+                $productName = $row["pname"];
+                $productImage = $row["pimage"];
+                // Display product details
+                
+            ?>
+                <div class='real_order'>
+                <img src='../assets/images1/<?php echo $productImage; ?>' alt='Product: <?php echo $productName; ?>'>
+                    <div class='real_order_info'>
+                        <div class='real_order_name'>ID Đơn hàng: <?php echo $oid; ?></div>
+                        <div class='real_order_date'>Ngày đặt hàng: <?php echo $odate; ?></div>
+                        <div class ='real_order_product_name'>Tên sản phẩm: <?php echo $productName; ?></div>
+                        <div class='real_order_total_money'>Tổng tiền: <?php echo number_format($ototal, 0, ',', '.') ?> đ</div>
+                        <div class='real_order_status'>Trạng thái: <span class="status" data-status="<?php echo $ostatus; ?>"><?php echo $ostatus; ?></span></div>
+                        <div class='real_order_button'>
+                            <a href='../../action/cancel_order_action.php?oid=<?php echo $oid; ?>' class='cancel_button'>Hủy</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <?php
+                echo $ostatus;
+                // Sum up total amount for all orders
+                $total += $ototal;
             }
-        }
-
-        function updateQuantity() {
-            var quantity = document.getElementById("quantity").value;
-            document.getElementById("finalQuantity").value = quantity; // Update the hidden input with the new quantity
-        }
-        function calculateTotal() {
-            var quantity = document.getElementById("quantity").value;
-            var price = <?php echo isset($_GET['pprice']) ? $_GET['pprice'] : 0; ?>;
-            var totalPrice = quantity * price;
-
-            document.getElementById("total-price").textContent = totalPrice.toLocaleString() + '₫';
-
-            document.getElementById("sellPrice").value = totalPrice;
-            document.getElementById("displaySellPrice").textContent = totalPrice; // Displaying the calculated sellPrice
-        }
-    </script>
-    
-      <?php
-        echo '<div class="form-group">';
-        echo '    <label for="name">HỌ VÀ TÊN</label>';
-        echo '    <input type="text" id="name" name="name" placeholder="Nhập họ và tên" required value="' . $mname . '">';
-        echo '</div>';
-        
-        echo '<div class="form-group">';
-        echo '    <label for="phone">SỐ ĐIỆN THOẠI</label>';
-        echo '    <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại" required value="' . $mphone . '">';
-        echo '</div>';
-        
-        echo '<div class="form-group">';
-        echo '    <label for="email">EMAIL</label>';
-        echo '    <input type="email" id="email" name="email" placeholder="Nhập email" required value="' . $memail . '">';
-        echo '</div>';
-      ?>
-      <input type="hidden" id="paymentmethod" name="paymentmethod" value="<?php echo $paymentmethod; ?>">
-      <div class="form-group">
-        <label for="delivery">THÔNG TIN NHẬN HÀNG</label>
-        <select id="delivery" name="delivery" required onchange="showQRCode()">
-            <option value="">Chọn phương thức thanh toán</option>
-            <option value="Chuyển khoản">Chuyển khoản</option>
-            <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
-        </select>
-    </div>
-    <div id="qrCode" style="display: none;">
-        <!-- Mã QR Code sẽ được hiển thị ở đây -->
-        <img id="qrImage" src="../assets/qr/qrcode.jpg" style="width:400px; height:400px" alt="QR Code" />
-    </div>
-
-    <script>
-    function showQRCode() {
-        var deliveryMethod = document.getElementById("delivery").value;
-        var qrCodeDiv = document.getElementById("qrCode");
-        var qrImage = document.getElementById("qrImage");
-        var paymentMethodInput = document.getElementById("paymentmethod");
-
-        if (deliveryMethod === "Chuyển khoản") {
-            // Thay đổi đường dẫn của hình ảnh QR code tương ứng với mã ngân hàng của bạn
-            qrImage.src = "../assets/qr/qrcode.jpg";
-            qrCodeDiv.style.display = "block";
-            paymentMethodInput.value = "Chuyển khoản"; // Gán giá trị của delivery cho paymentmethod input
-        } else if (deliveryMethod === "Thanh toán khi nhận hàng") {
-            // Xử lý cho phương thức thanh toán khi nhận hàng
-            qrCodeDiv.style.display = "none";
-            paymentMethodInput.value = "Thanh toán khi nhận hàng"; // Gán giá trị của delivery cho paymentmethod input
+            // Display the total amount for all orders
+            echo "<div class='real_order_total'><p>Tổng tiền của tất cả đơn hàng: " . number_format($total, 0, ',', '.') . " đ</p></div>";
         } else {
-            qrCodeDiv.style.display = "none";
-            paymentMethodInput.value = ""; // Đặt giá trị về trống nếu không chọn phương thức nào
-        }
-    }
-</script>
-
-      <!-- <div class="form-group">
-        <label for="city">Thành Phố</label>
-        <select id="city" name="city" required>
-          <option value="">Chọn thành phố</option>
-          <option value="Hà Nội">Hà Nội</option>
-          <option value="Hồ Chí Minh">Hồ Chí Minh</option>
-          <option value="Đà Nẵng">Đà Nẵng</option>
-          <option value="Hải Phòng">Hải Phòng</option>
-          <option value="Cần Thơ">Cần Thơ</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="district">Quận</label>
-        <select id="district" name="district" required>
-          <option value="">Chọn quận</option>
-          <option value="Thanh Xuân">Thanh Xuân</option>
-          <option value="Hoàn Kiếm">Hoàn Kiếm</option>
-          <option value="Ba Đình">Ba Đình</option>
-          <option value="Đống Đa">Đống Đa</option>
-          <option value="Hai Bà Trưng">Hai Bà Trưng</option>
-        </select>
-      </div> -->
-      <div class="form-group">
-        <label for="address">ĐỊA CHỈ NHẬN HÀNG</label>
-        <input type="text" id="address" name="address" placeholder="Nhập địa chỉ nhận hàng" required>
-      </div>
-      <?php
-      if (isset($_GET['pprice'])) {
-          echo '<div class="total">';
-          echo '<div class="total-label">Tổng tiền tạm tính:</div>';
-          echo '<div class="total-price" id="total-price">' . number_format($_GET['pprice']) . '₫</div>';
-          echo '</div>';
-      } else {
-          echo '<p>Không có thông tin sản phẩm.</p>';
-      }
-      ?>
-      <!-- <script>
-        function increment() {
-          var quantityField = document.getElementById("quantity");
-          quantityField.stepUp(1);
-          calculateTotal(); // Gọi hàm tính tổng tiền sau khi cập nhật số lượng
-        }
-        function decrement() {  
-          var quantityField = document.getElementById("quantity");
-          quantityField.stepDown(1);
-          calculateTotal(); // Gọi hàm tính tổng tiền sau khi cập nhật số lượng
+            // Display a message if there are no orders
+            echo "Không có đơn hàng nào";
         }
 
-        function calculateTotal() {
-            var quantity = document.getElementById("quantity").value;
-            var price = <?php echo isset($_GET['pprice']) ? $_GET['pprice'] : 0; ?>;
+        mysqli_close($conn);
+        ?>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var statusElements = document.querySelectorAll('.status');
 
-            // Calculate total price
-            var totalPrice = quantity * price;
+                statusElements.forEach(function(statusElement) {
+                    var ostatus = statusElement.dataset.status;
 
-            // Display total price
-            document.getElementById("total-price").textContent = totalPrice.toLocaleString() + '₫';
+                    if (ostatus === "chờ xác nhận") {
+                        statusElement.style.color = "yellow";
+                    } else if (ostatus === "đã xác nhận") {
+                        statusElement.style.color = "green";
+                    }
+                });
+            });
+        </script>
+        
+    </div>  
+    <div class="cancel_orders">
+    <h2>Các đơn hàng đã hủy</h2>
+        <?php
+        include '../connect.php';
 
-            // Set the total price to the sellPrice field
-            document.getElementById("sellPrice").value = totalPrice;
+        $canceledOrdersQuery = "SELECT orders.oid, orders.odate, orders.ototal, orders.ostatus, product.pname, product.pimage
+                                FROM orders
+                                JOIN product ON orders.pid = product.pid
+                                WHERE orders.mid = $userID
+                                AND orders.ostatus = 'đã hủy'";
+
+        $canceledOrdersResult = mysqli_query($conn, $canceledOrdersQuery);
+
+        if ($canceledOrdersResult && mysqli_num_rows($canceledOrdersResult) > 0) {
+            while ($row = mysqli_fetch_assoc($canceledOrdersResult)) {
+                $oid = $row["oid"];
+                $odate = $row["odate"];
+                $ototal = $row["ototal"];
+                $ostatus = $row["ostatus"];
+                $productName = $row["pname"];
+                $productImage = $row["pimage"];
+
+                // Display canceled order details
+                ?>
+                <div class='cancel_order'>
+                <img src='../assets/images1/<?php echo $productImage; ?>' alt='Product: <?php echo $productName; ?>'>
+                    <div class='cancel_order_info'>
+                        <div class='cancel_order_name'>ID Đơn hàng: <?php echo $oid; ?></div>
+                        <div class='cancel_order_date'>Ngày đặt hàng: <?php echo $odate; ?></div>
+                            <div class='cancel_order_product_name'>Tên sản phẩm: <?php echo $productName; ?></div>
+                            <div class='cancel_order_status'>Trạng thái: <?php echo $ostatus; ?></div>
+                    </div>
+                </div>
+                <?php
+            }
+        } else {
+            // Display a message if there are no canceled orders
+            echo "Không có đơn hàng đã hủy";
         }
-      </script> -->
-      <button type="submit" class="button">Tiếp tục</button>
-    </form>
-  </div>
+
+        mysqli_close($conn);
+        ?>
+</div>
+
 </body>
 </html>

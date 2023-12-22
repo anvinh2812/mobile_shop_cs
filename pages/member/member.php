@@ -8,7 +8,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
 include '../connect.php'; // Đảm bảo đường dẫn đến file connect.php là chính xác
 $username = $_SESSION['TenDangNhap1'];
 // Thực hiện truy vấn để lấy ID của người dùng dựa trên tên đăng nhập
-$sql = "SELECT mid FROM member WHERE username = '$username'";
+$sql = "SELECT * FROM member WHERE username = '$username'";
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
     // Lấy kết quả và hiển thị ID của người dùng
@@ -28,101 +28,15 @@ mysqli_close($conn);
     <link rel="shortcut icon" href="../assets/img/zalo suopprt/cellphones.png">
     <link rel="stylesheet" href="../assets/font/themify-icons-font/themify-icons/themify-icons.css">
     <link rel="stylesheet" href="../assets/font/fontawesome-free-5.15.4/fontawesome-free-5.15.4-web/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../../action/javascript.js">
     <link rel="stylesheet" href="../../css/product_detail.css">
     <link rel="stylesheet" href="../../css/dropbox.css">
     <link rel="stylesheet" href="../../action/dropbox.js">
     <link rel="stylesheet" href="../../css/find.css">
     <link rel="stylesheet" href="../../css/home.css">
+    <link rel="stylesheet" href="../../css/member.css">
     <title>Trang thành viên</title>
-    <style>
-        /* Định dạng các khối chứa */
-        #container {
-            display: flex;
-            height: 100vh;
-        }
-        #sidebar {
-            width: 20%;
-            background-color: #f0f0f0;
-        }
-        #content {
-            width: 80%;
-            padding: 20px;
-        }
-        /* Định dạng menu bên trái */
-        #sidebar ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        #sidebar li {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-        #sidebar li:hover {
-            background-color: #eee;
-        }
-        #sidebar li a {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: #333;
-        }
-        #sidebar li img {
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
-        }
-        /* Định dạng nội dung chính */
-        #content h1 {
-            font-size: 24px;
-            margin: 0;
-        }
-        #content p {
-            font-size: 16px;
-            margin: 10px 0;
-        }
-        #content span {
-            font-weight: bold;
-        }
-        /* Định dạng các tab lọc */
-        #content nav {
-            margin: 20px 0;
-        }
-        #content nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: space-around;
-        }
-        #content nav li {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        #content nav li:hover {
-            background-color: #eee;
-        }
-        #content nav li a {
-            text-decoration: none;
-            color: #333;
-        }
-        /* Định dạng khối thông báo */
-        #content div {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 300px;
-        }
-        #content div img {
-            width: 100px;
-            height: 100px;
-        }
-        #content div p {
-            font-size: 18px;
-            color: #999;
-        }
-    </style>
 </head>
 <body>
 <div class="header__height"></div>
@@ -205,7 +119,7 @@ mysqli_close($conn);
                             <ul class="header__navbar__list">
                                 <li class="header__navbar__item">
                                     <div class="header__navbar__item__wrapper">
-                                        <a href="../detail/cart_detail.php" class="header__navbar__item__link">
+                                        <a href="../dashboard/history.php" class="header__navbar__item__link">
                                             <i class="fas fa-shipping-fast"></i>
                                             <div class="header__navbar__item__link__desc__wrapper">
                                                 <p>Lịch sử</p>
@@ -305,38 +219,40 @@ mysqli_close($conn);
                 </div>
             </div>
         </div>
-    <div id="container">
-        <div id="sidebar">
-            <ul>
-                <li><a href="#"><img src="history.png" alt="History">Lịch sử mua hàng</a></li>
-                <li><a href="#"><img src="warranty.png" alt="Warranty">Tra cứu bảo hành</a></li>
-                <li><a href="#"><img src="offer.png" alt="Offer">Ưu đãi của bạn</a></li>
-                <li><a href="#"><img src="goods.png" alt="Goods">Hàng thành viên</a></li>
-                <li><a href="#"><img src="account.png" alt="Account">Tài khoản của bạn</a></li>
-                <li><a href="#"><img src="support.png" alt="Support">Hỗ trợ</a></li>
-                <li><a href="#"><img src="feedback.png" alt="Feedback">Góp ý - Phản hồi</a></li>
-                <li><a href="#"><img src="logout.png" alt="Logout">Thoát tài khoản</a></li>
-            </ul>
-        </div>
-        <div id="content">
-            <h1>Vhn1F11uv</h1>
-            <p><span>0</span> đơn hàng</p>
-            <p><span>0d</span> Tổng tiền tích lũy</p>
-            <nav>
+        <div id="container">
+            <div id="sidebar">
                 <ul>
-                    <li><a href="#" onclick="showAll()">Tất cả</a></li>
-                    <li><a href="#" onclick="showConfirmed()">Chờ xác nhận</a></li>
-                    <li><a href="#" onclick="showReceived()">Đã xác nhận</a></li>
-                    <li><a href="#" onclick="showTransported()">Đang vận chuyển</a></li>
-                    <li><a href="#" onclick="showDelivered()">Đã giao hàng</a></li>
-                    <li><a href="#" onclick="showCancelled()">Đã hủy</a></li>
+                    <li><a href="#content"> <i class="far fa-user-circle"></i>Tài khoản của bạn</a></li>
+                    <li><a href="../dashboard/history.php"><i class="fas fa-shipping-fast"></i>Lịch sử mua hàng</a></li>
+                    <li><a href="../dashboard/logout.php"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a></li>
                 </ul>
-            </nav>
-            <div>
-                <img src="no-order.png" alt="No order">
-                <p>Không có đơn hàng nào thỏa mãn</p>
+            </div>
+            <div id="content">
+                <form method="POST" action="../../action/update_member_action.php">
+                    <input type="hidden" name="user_id" value="<?php echo $row['mid']; ?>">
+                    <div class="user_name">
+                        <label for="username">Username:</label>
+                        <input type="text" name="username" id="username" value="<?php echo $row['username']; ?>">
+                    </div>
+                    <div class="full_name">
+                        <label for="fullname">Full Name:</label>      
+                        <input type="text" name="fullname" id="fullname" value="<?php echo $row['mname']; ?>">
+                    </div>
+                    <div class="address">
+                        <label for="address">Address:</label>
+                        <input type="text" name="address" id="address" value="<?php echo $row['madd']; ?>">
+                    </div>
+                    <div class="phone">
+                        <label for="phone">Phone:</label>
+                        <input type="text" name="phone" id="phone" value="<?php echo $row['mphone']; ?>">
+                    </div>
+                    <div class="email">
+                        <label for="email">Email:</label>
+                        <input type="text" name="email" id="email" value="<?php echo $row['memail']; ?>">
+                    </div>
+                    <input class="update_button" type="submit" value="Cập nhật thông tin">
+                </form>
             </div>
         </div>
-    </div>
 </body>
 </html>

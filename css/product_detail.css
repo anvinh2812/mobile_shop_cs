@@ -100,7 +100,7 @@ h2 {
     height: 60px;
     margin-bottom: 10px;
     outline: none;
-    width: 80%;
+    width: 300px;
     text-align: center;
     display: flex;
     align-items: center;
@@ -118,7 +118,11 @@ h2 {
     background: linear-gradient(#ff0000, #cc0000); /* Đổi màu khi nút được nhấn */
     color: #fff;
 }
-
+.payment_price{
+    font-weight: bold;
+    font-size: 20px;
+    color: #f52f32;
+}
 
 
 .comment-area {
@@ -189,31 +193,60 @@ h2 {
     border-radius: 5px; /* Độ cong của viền */
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); /* Đổ bóng */
     padding: 15px; /* Khoảng cách bên trong */
-    max-width: 500px; /* Độ rộng tối đa */
+    max-width: 800px; /* Độ rộng tối đa */
 }
+
 .comment {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #333;
     display: flex;
     flex-direction: column; /* Sắp xếp các phần tử theo cột */
     position: relative;
-    
+    border: 1px solid #ccc; /* Viền */
+    border-radius: 5px; /* Độ cong của viền */
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); /* Đổ bóng */
 }
-
+.delete_comment {
+    padding: 5px;
+    background-color: #cc0000;
+    color: #fff;
+    width: 120px;
+    margin-left: 60%;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+    
+.title_comment{
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0 0 5px;
+}
 .comment .fa-user-circle {
     margin-bottom: 5px; /* Khoảng cách giữa icon và nội dung */
 }
 
 .comment h4 {
     font-size: large;
-    margin-bottom: 10px;
 }
-
+.comment i {
+    font-weight: bold;
+    font-size: 25px;
+    margin: 0 10px 0 5px;
+}
+.comment p {
+    font-size: 18px;
+    margin: 10px 0 10px 20px;
+}
 .comment .time {
     position: absolute; /* Xác định vị trí tuyệt đối cho ngày giờ */
     bottom: 0;
     right: 0;
     font-size: 12px;
     color: #999;
+    width: 80px;
+    margin: 0 10px 10px 0;
 }
 
 

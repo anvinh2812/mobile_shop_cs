@@ -32,6 +32,7 @@ if (mysqli_num_rows($result) > 0) {
     <link rel="shortcut icon" href="../assets/img/zalo suopprt/cellphones.png">
     <link rel="stylesheet" href="../assets/font/themify-icons-font/themify-icons/themify-icons.css">
     <link rel="stylesheet" href="../assets/font/fontawesome-free-5.15.4/fontawesome-free-5.15.4-web/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../../css/home.css">
     <link rel="stylesheet" href="../../action/javascript.js">
     <link rel="stylesheet" href="../../css/product_detail.css">
@@ -122,7 +123,7 @@ if (mysqli_num_rows($result) > 0) {
                             <ul class="header__navbar__list">
                                 <li class="header__navbar__item">
                                     <div class="header__navbar__item__wrapper">
-                                        <a href="../detail/cart_detail.php" class="header__navbar__item__link">
+                                        <a href="../dashboard/history.php" class="header__navbar__item__link">
                                             <i class="fas fa-shipping-fast"></i>
                                             <div class="header__navbar__item__link__desc__wrapper">
                                                 <p>Lịch sử</p>
@@ -160,27 +161,34 @@ if (mysqli_num_rows($result) > 0) {
                                         </div>
                                         <div class="dropdown" id="dropdown-smem">
                                             <div class="dropdown-content">
-                                                <a href="../member/member.php">Trang cá nhân</a>
-                                                <a href="../dashboard/logout.php">Đăng xuất</a>
+                                                <a href="../member/member.php"><i class="fa-regular fa-user"></i>Trang cá nhân</a>
+                                                <a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
 
                                 <style>
-                                    /* Ẩn dropdown content mặc định */
-                                .dropdown-content {
-                                display: none;
-                                position: absolute;
-                                background-color: #fff;
-                                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-                                z-index: 1;
-                                color: #000; /* Màu chữ đen */
-                                font-weight: bold; /* In đậm */
+                                    .dropdown-content {
+                                    display: none;
+                                    position: absolute;
+                                    background-color: #fff;
+                                    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.5);
+                                    width: 100px;
+                                    border-radius: 10px;
+                                    z-index: 1;
+                                    color: #000; /* Màu chữ đen */
+                                    font-weight: bold; /* In đậm */
+                                }
+                                .dropdown-content i{
+                                    font-weight: bold;
+                                    margin: 0 3px 0 5px;
                                 }
                                 /* Hiển thị dropdown khi có class 'show' */
                                 .dropdown-content.show {
                                     display: block;
+                                    border-radius: 10px;
+                                    width: 180px;
                                 }
                                 .dropdown-content a {
                                     display: block;
@@ -192,10 +200,12 @@ if (mysqli_num_rows($result) > 0) {
                                     color: #000; /* Màu chữ đen */
                                     font-weight: bold; /* In đậm */
                                     transition: background-color 0.3s ease; /* Hiệu ứng hover */
+                                    border-radius: 10px;
                                 }
 
                                 .dropdown-content a:hover {
-                                    background-color: #f0f0f0; /* Màu nền khi di chuột qua */
+                                    background-color: #ff7e7e; 
+                                    cursor: pointer;
                                 }
                                 </style>
 
@@ -340,8 +350,7 @@ if (mysqli_num_rows($result) > 0) {
                 ?>
 
                 <div class="payment_buttons">
-                    <button type="button">Mua ngay</button>
-                    <form action="../../action/add_product_to_cart.php" method="GET">
+                <form action="../../action/add_product_to_cart.php" method="GET">
                         <!-- Hidden input to pass product name to the PHP script -->
                         <input type="hidden" name="pname" value="<?php echo $receivedPname; ?>">
                         <button type="submit">Thêm vào giỏ hàng</button>
@@ -392,15 +401,17 @@ if (mysqli_num_rows($result) > 0) {
                                 $mname = $member['mname'];
             
                                 echo '<div class="comment">';
+                                echo '<div class="title_comment">';
                                 echo '<i class="fa fa-user-circle"></i>';
-                                echo '<h4>' . $mname . '<span></span></h4>';
+                                echo '<h4>' . $mname . '</h4>';
+                                if ($mid === $userID) {
+                                    echo '<a class="delete_comment" href="../../action/delete_comment_action.php?comid=' . $comment['comid'] . '&mid=' . $userID .  '&pname=' . $receivedPname .   '&pid=' . $pid . '">Xóa comment</a>';
+                                }
+                                echo '</div>';
                                 echo '<p>' . $comment['content'] . '</p>';
                                 echo '<span class="time">' . $comment['comdate'] . '</span>';
-            
                                 // Kiểm tra xem comment thuộc về người dùng đăng nhập hay không để hiển thị nút xóa
-                                if ($mid === $userID) {
-                                    echo '<a href="../../action/delete_comment_action.php?comid=' . $comment['comid'] . '&mid=' . $userID .  '&pname=' . $receivedPname . '">Xóa comment</a>';
-                                }
+                                
             
                                 echo '</div>';
                             } else {
