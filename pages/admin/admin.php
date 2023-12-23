@@ -7,16 +7,15 @@ if (isset($_SESSION['login']) && isset($_SESSION['TenDangNhap1'])) {
     if ($_SESSION['login'] === true) {
         // Đã đăng nhập với vai trò admin, cho phép truy cập vào trang admin
         $username = $_SESSION['TenDangNhap1'];
-        echo "Chào mừng admin $username!";
         // Hiển thị nội dung của trang admin ở đây
     } else {
         // Không có quyền truy cập, chuyển hướng về trang đăng nhập
-        header("Location: ../pages/dashboard/login.php");
+        header("Location: ../../pages/dashboard/login.php");
         exit();
     }
 } else {
     // Nếu chưa đăng nhập, chuyển hướng về trang đăng nhập
-    header("Location: ../pages/dashboard/login.php");
+    header("Location: ../../pages/dashboard/login.php");
     exit();
 }
 ?>

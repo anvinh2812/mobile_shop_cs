@@ -2,8 +2,20 @@
 session_start();
 
 // Kiểm tra phiên làm việc đã được khởi tạo chưa và xác thực quyền truy cập
-if (!(isset($_SESSION['login']) && isset($_SESSION['TenDangNhap1']) && $_SESSION['login'] === true)) {
-    header("Location: ../pages/dashboard/login.php");
+if (isset($_SESSION['login']) && isset($_SESSION['TenDangNhap1'])) {
+    // Kiểm tra xem người dùng đã đăng nhập với vai trò admin chưa
+    if ($_SESSION['login'] === true) {
+        // Đã đăng nhập với vai trò admin, cho phép truy cập vào trang admin
+        $username = $_SESSION['TenDangNhap1'];
+        // Hiển thị nội dung của trang admin ở đây
+    } else {
+        // Không có quyền truy cập, chuyển hướng về trang đăng nhập
+        header("Location: ../../pages/dashboard/login.php");
+        exit();
+    }
+} else {
+    // Nếu chưa đăng nhập, chuyển hướng về trang đăng nhập
+    header("Location: ../../pages/dashboard/login.php");
     exit();
 }
 
@@ -38,11 +50,12 @@ $result_top_revenue_product = mysqli_query($conn, $query_top_revenue_product);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../assets/img/zalo suopprt/cellphones.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="admin_side_bar.css">
     <link rel="stylesheet" href="admin_ql_orders.css">
     <link rel="stylesheet" href="admin_ql_member.css">
-    <title>Thông tin sản phẩm</title>
+    <title>Thống Kê</title>
     <style>
         div table tr td{
             height:20px;
@@ -151,39 +164,37 @@ $result_top_revenue_product = mysqli_query($conn, $query_top_revenue_product);
                 }
                 ?>
         </div>
-        <div class="hot_sell">
-            <?php
+        <div class="hot_care">
+        <?php
             include '../connect.php';
 
-            $sql = "SELECT p.pid, p.pname, SUM(o.quantity) AS total_quantity
-                    FROM orders o
-                    INNER JOIN product p ON o.pid = p.pid
-                    WHERE o.ostatus = 'đã xác nhận'
-                    GROUP BY p.pid, p.pname
-                    ORDER BY total_quantity DESC
+            $sql = "SELECT p.pname, p.pimage, COUNT(c.comid) AS total_comments
+                    FROM product p
+                    LEFT JOIN comment c ON p.pid = c.pid
+                    GROUP BY p.pname, p.pimage
+                    ORDER BY total_comments DESC
                     LIMIT 5";
-   
 
             $result = mysqli_query($conn, $sql);
 
             if ($result && mysqli_num_rows($result) > 0) {
                 ?>
-                <h2>Top 5 sản phẩm bán chạy nhất:</h2>
+                <h2>Top 5 sản phẩm được quan tâm nhiều nhất:</h2>
                 <table border="1">
                     <thead>
                         <tr>
-                            <th>ID sản phẩm</th>
                             <th>Tên sản phẩm</th>
-                            <th>Tổng số lượng bán</th>
+                            <th>Hình ảnh</th>
+                            <th>Tổng số lượng bình luận</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
-                        echo "<td>{$row['pid']}</td>";
                         echo "<td>{$row['pname']}</td>";
-                        echo "<td>{$row['total_quantity']}</td>";
+                        echo "<td><img src=\"../assets/images1/{$row['pimage']}\" alt=\"điện thoại {$row['pname']}\" style=\"width: 100px; height: 100px;\"></td>";
+                        echo "<td>{$row['total_comments']}</td>";
                         echo "</tr>";
                     }
                     ?>
@@ -191,11 +202,13 @@ $result_top_revenue_product = mysqli_query($conn, $query_top_revenue_product);
                 </table>
                 <?php
             } else {
-                echo "<p>Không có dữ liệu sản phẩm.</p>";
+                echo "<p>Không có dữ liệu sản phẩm hoặc bình luận.</p>";
             }
 
             mysqli_close($conn);
             ?>
+
+
         </div>
         <div class="top_cate_sell">
             <?php

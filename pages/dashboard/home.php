@@ -1,3 +1,14 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" initial-scale="1.00" maximum-scale="1.0" />
+    <link rel="shortcut icon" href="../assets/img/zalo suopprt/cellphones.png">
+    <link rel="stylesheet" href="../assets/font/themify-icons-font/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="../assets/font/fontawesome-free-5.15.4/fontawesome-free-5.15.4-web/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../../css/find.css">
+    <link rel="stylesheet" href="../../css/home.css">   
+    <title>Nhóm 13 - Home</title>
+</head>
 <?php
 session_start();
 if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
@@ -24,18 +35,7 @@ mysqli_close($conn);
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../assets/img/zalo suopprt/cellphones.png">
-    <link rel="stylesheet" href="../assets/font/themify-icons-font/themify-icons/themify-icons.css">
-    <link rel="stylesheet" href="../assets/font/fontawesome-free-5.15.4/fontawesome-free-5.15.4-web/css/all.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../../css/find.css">
-    <link rel="stylesheet" href="../../css/toast.css">
-    <link rel="stylesheet" href="../../css/home.css">   
-    <title>Nhóm 13 - Home</title>
-</head>
+
 
 <body>
     <div id="main">

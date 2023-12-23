@@ -3,18 +3,19 @@ session_start();
 include '../connect.php';
 // Kiểm tra phiên làm việc
 if (isset($_SESSION['login']) && isset($_SESSION['TenDangNhap1'])) {
+    // Kiểm tra xem người dùng đã đăng nhập với vai trò admin chưa
     if ($_SESSION['login'] === true) {
-        // Hiển thị trang admin
+        // Đã đăng nhập với vai trò admin, cho phép truy cập vào trang admin
         $username = $_SESSION['TenDangNhap1'];
-        // Hiển thị nội dung trang admin ở đây
+        // Hiển thị nội dung của trang admin ở đây
     } else {
         // Không có quyền truy cập, chuyển hướng về trang đăng nhập
-        header("Location: ../pages/dashboard/login.php");
+        header("Location: ../../pages/dashboard/login.php");
         exit();
     }
 } else {
     // Nếu chưa đăng nhập, chuyển hướng về trang đăng nhập
-    header("Location: ../pages/dashboard/login.php");
+    header("Location: ../../pages/dashboard/login.php");
     exit();
 }
 
@@ -148,7 +149,8 @@ switch ($action) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="admin_ql_member.css">
-    <title>Khách hàng</title>
+    <link rel="shortcut icon" href="../assets/img/zalo suopprt/cellphones.png">
+    <title>Thành Viên</title>
     <link rel="stylesheet" href="admin_side_bar.css">
 </head>
 
