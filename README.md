@@ -10,21 +10,14 @@ SellphoneS là một trang web bán điện thoại trực tuyến với một l
 - Đảm bảo bạn đã cài đặt XAMPP hoặc một môi trường tương tự để chạy ứng dụng PHP và MySQL trên máy tính của bạn.
 
 ### 2. Clone repository
-- Sao chép (clone) repository SellphoneS về máy tính của bạn bằng lệnh sau:
-Thay `<URL_repository>` bằng đường dẫn URL của repository SellphoneS trên GitHub.
+- Sao chép (clone) repository SellphoneS về máy tính của bạn
 
 ### 3. Cấu hình cơ sở dữ liệu
 - Mở XAMPP và khởi động Apache và MySQL.
 - Trong trình duyệt web, nhập `http://localhost/phpmyadmin` để mở giao diện quản lý cơ sở dữ liệu PHPMyAdmin.
-- Tạo một cơ sở dữ liệu mới và nhập tên cơ sở dữ liệu (ví dụ: sellphones_db).
-- Mở tệp `config.php` trong thư mục `includes` của SellphoneS và cập nhật thông tin cơ sở dữ liệu của bạn (tên cơ sở dữ liệu, tên người dùng, mật khẩu) tương ứng.
+- Tạo một cơ sở dữ liệu mới và nhập tên cơ sở dữ liệu và đưa dữ liệu từ file sellphones.sql để tạo cơ sở dữ liệu
 
 ### 4. Chạy trang web
 - Di chuyển thư mục SellphoneS vào thư mục `htdocs` trong thư mục cài đặt của XAMPP.
 - Mở trình duyệt web và truy cập vào `http://localhost/SellphoneS` để xem trang web.
 
-## Đóng góp
-Nếu bạn muốn đóng góp vào dự án, hãy tạo pull request và chúng tôi sẽ xem xét những đóng góp của bạn.
-
-## Liên hệ
-Nếu bạn có bất kỳ câu hỏi hoặc đề xuất nào, vui lòng liên hệ với chúng tôi qua email: contact@sellphones.com.
